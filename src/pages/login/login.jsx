@@ -1,11 +1,11 @@
 import React from "react";
 
-const Movie = () => {
+const Login = () => {
     return (
         <div>
-            <h1>Movie Page</h1>
+            <h1>Login Page</h1>
         </div>
     )
 }
 
-export default Movie;
+export default Login;
