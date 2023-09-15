@@ -13,7 +13,7 @@ const NavBar = () => {
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
                 <Navbar.Text>
-                    <a href="#login">Mark Otto</a>
+                    <a href="#login">Log-in</a>
                 </Navbar.Text>
                 </Navbar.Collapse>
             </Container>
