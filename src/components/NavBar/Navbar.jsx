@@ -3,9 +3,10 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-
+import { useSelector } from "react-redux";
 
 const NavBar = () => {
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
     return (
         <Navbar className="bg-body-tertiary">
             <Container>
@@ -13,9 +14,14 @@ const NavBar = () => {
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
                 <Navbar.Text>
-                    <a href="#login">Log-in</a>
+                    {isAuthenticated ? (
+                        <a href="/logout">Cerrar Sesion</a>
+                    ) : (
+                        <a href="/login">Iniciar Sesion</a>
+                    )}
                 </Navbar.Text>
                 </Navbar.Collapse>
+
             </Container>
         </Navbar>
     )
