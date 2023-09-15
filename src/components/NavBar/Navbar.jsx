@@ -10,16 +10,16 @@ const NavBar = () => {
     return (
         <Navbar className="bg-body-tertiary">
             <Container>
-                <Navbar.Brand href="/">Movie Reviews</Navbar.Brand>
+                <Navbar.Brand href="/home">Movie Reviews</Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text>
-                        {isAuthenticated ? (
-                            <a href="/logout">Logout</a>
-                        ) : (
-                            <a href="/login">Login</a>
-                        )}
-                    </Navbar.Text>
+                <Navbar.Text>
+                    {isAuthenticated ? (
+                        <a href="/logout">Cerrar Sesion</a>
+                    ) : (
+                        <a href="/login">Iniciar Sesion</a>
+                    )}
+                </Navbar.Text>
                 </Navbar.Collapse>
 
             </Container>

@@ -19,7 +19,7 @@ const Login = () => {
             //TODO: Validar credenciales con backend
         }
         dispatch(login(userFromServer))
-        navigate("/")
+        navigate("/home")
     }
 
     return (

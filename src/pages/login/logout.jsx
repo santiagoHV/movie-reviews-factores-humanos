@@ -8,7 +8,7 @@ const Logout = () => {
     const navigate = useNavigate()
     dispatch(logout())
     useEffect(() => {
-        navigate("/")
+        navigate("/home")
     })
 }
 
