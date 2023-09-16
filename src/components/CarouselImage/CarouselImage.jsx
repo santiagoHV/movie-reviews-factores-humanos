@@ -5,7 +5,7 @@ function CarouselImage({ text , path}) {
   return (
 
 <div className='container-image'>
-      <img class='image-carousel'
+      <img className='image-carousel'
         src={path}
         alt={text}
       />
