@@ -1,14 +1,22 @@
-import { logout } from "../../reducers/authSlice"
-import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+
+import { useDispatch } from "react-redux"
+import { logout } from "../../reducers/authSlice"
+import { showAlert } from "../../reducers/notificationSlice"
 
 const Logout = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    dispatch(logout())
+
     useEffect(() => {
+        const notification = {
+            style: 'info',
+            message: 'Se ha cerrado sesion'
+        }
+        dispatch(logout())
         navigate("/")
+        dispatch(showAlert(notification))
     })
 }
 

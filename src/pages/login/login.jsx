@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, Form, Button } from 'react-bootstrap';
 import { useDispatch } from "react-redux";
 import { login } from "../../reducers/authSlice";
-import { useNavigate } from "react-router-dom";
-
-import { Card, Form, Button } from 'react-bootstrap';
+import { showAlert } from "../../reducers/notificationSlice"
 
 const Login = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -16,10 +17,19 @@ const Login = () => {
     const handleLogin = () => {
         fetchUser(formData.email, formData.password)
             .then(user => {
+                const notification = {
+                    style: 'success',
+                    message: 'Se ha iniciado sesion'
+                }
                 dispatch(login(user))
                 navigate("/")
+                dispatch(showAlert(notification))
             }).catch(error => {
-                //TODO
+                const notification = {
+                    style: 'danger',
+                    message: 'Usuario/Contraseña invalidos'
+                }
+                dispatch(showAlert(notification))
             })
     }
 
@@ -27,7 +37,7 @@ const Login = () => {
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
         return delay(150)
             .then(() => {
-                return Math.random() <= 1 ? { status: 201, user: { email: 'email@test', token: 'token' } } : { status: 400, message: 'Usuario no encontrado' }
+                return Math.random() <= 0.9 ? { status: 201, user: { email: 'email@test', token: 'token' } } : { status: 400, message: 'Usuario no encontrado' }
             })
             .then((response) => {
                 if (response.status === 201) {
