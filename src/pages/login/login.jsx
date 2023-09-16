@@ -3,8 +3,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../reducers/authSlice";
 import { useNavigate } from "react-router-dom";
 
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Card, Form, Button } from 'react-bootstrap';
 
 const Login = () => {
     const navigate = useNavigate()
@@ -15,16 +14,35 @@ const Login = () => {
     })
 
     const handleLogin = () => {
-        const userFromServer = {
-            //TODO: Validar credenciales con backend
-        }
-        dispatch(login(userFromServer))
-        navigate("/home")
+        fetchUser(formData.email, formData.password)
+            .then(user => {
+                dispatch(login(user))
+                navigate("/")
+            }).catch(error => {
+                //TODO
+            })
+    }
+
+    const fetchUser = (email, password) => {
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        return delay(150)
+            .then(() => {
+                return Math.random() <= 1 ? { status: 201, user: { email: 'email@test', token: 'token' } } : { status: 400, message: 'Usuario no encontrado' }
+            })
+            .then((response) => {
+                if (response.status === 201) {
+                    return response.user
+                } else if (response.status === 400) {
+                    throw new Error("Usuario no encontrado")
+                } else {
+                    throw new Error("Error en la solicitud")
+                }
+            })
     }
 
     return (
-        <div>
-            <h1>Login Page</h1>
+        <Card style={{ width: '400px', margin: '50px auto', padding: '50px' }}>
+            <Card.Title style={{ marginBottom: '20px' }}>Iniciar Sesion</Card.Title>
             <Form>
                 <Form.Group className="mb-3">
                     <Form.Label className="form-label" htmlFor="login-email">Correo electronico</Form.Label>
@@ -42,7 +60,7 @@ const Login = () => {
                 </Form.Group>
                 <Button type="button" className="btn btn-primary" onClick={handleLogin}>Iniciar Sesion</Button>
             </Form>
-        </div>
+        </Card>
     )
 }
 
