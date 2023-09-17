@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Form, Button } from 'react-bootstrap';
 import { useDispatch } from "react-redux";
@@ -27,7 +27,7 @@ const Login = () => {
             }).catch(error => {
                 const notification = {
                     style: 'danger',
-                    message: 'Usuario/Contraseña invalidos'
+                    message: String(error)
                 }
                 dispatch(showAlert(notification))
             })
@@ -37,7 +37,7 @@ const Login = () => {
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
         return delay(150)
             .then(() => {
-                return Math.random() <= 0.9 ? { status: 201, user: { email: 'email@test', token: 'token' } } : { status: 400, message: 'Usuario no encontrado' }
+                return (email != '' && password != '') ? { status: 201, user: { email: email, token: 'token' } } : { status: 400, message: 'Usuario no encontrado' }
             })
             .then((response) => {
                 if (response.status === 201) {
@@ -51,7 +51,7 @@ const Login = () => {
     }
 
     return (
-        <Card style={{ width: '400px', margin: '50px auto', padding: '50px' }}>
+        <Card style={{ maxWidth: '400px', margin: '50px auto', padding: '50px' }}>
             <Card.Title style={{ marginBottom: '20px' }}>Iniciar Sesion</Card.Title>
             <Form>
                 <Form.Group className="mb-3">
