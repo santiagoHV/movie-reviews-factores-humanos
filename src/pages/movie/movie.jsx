@@ -31,8 +31,8 @@ const Movie = () => {
     return (
         <>
             <Container className="movie-container">
-                <Row>
-                    <Col>
+                <Row className="mb-5">
+                    <Col md={4}>
                         <figure>
                             <img
                                 style={{width: 300 + 'px'}}
@@ -43,7 +43,7 @@ const Movie = () => {
                             </figcaption>
                         </figure>
                     </Col>
-                    <Col>
+                    <Col md={6}>
                         <h1 tabIndex={1}>Titulo de pelicula</h1>
                         <ReactStars 
                             count={5}
