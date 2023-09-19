@@ -1,0 +1,11 @@
+.user-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-image-container img {
+    height: 70px;
+    width: 80px;
+    border-radius: 35px;
+}

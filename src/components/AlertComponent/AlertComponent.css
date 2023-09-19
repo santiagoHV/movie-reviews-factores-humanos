@@ -1,0 +1,20 @@
+/*Desktop (no-touch) style*/
+@media (hover :hover) {
+    .alertContainer {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999;
+    }
+}
+
+/*Mobile (touch) style*/
+@media (hover: none) {
+    .alertContainer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+    }
+}

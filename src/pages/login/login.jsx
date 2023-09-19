@@ -1,30 +1,58 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, Form, Button } from 'react-bootstrap';
 import { useDispatch } from "react-redux";
 import { login } from "../../reducers/authSlice";
-import { useNavigate } from "react-router-dom";
-
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { showAlert } from "../../reducers/notificationSlice"
 
 const Login = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     })
 
     const handleLogin = () => {
-        const userFromServer = {
-            //TODO: Validar credenciales con backend
-        }
-        dispatch(login(userFromServer))
-        navigate("/home")
+        fetchUser(formData.email, formData.password)
+            .then(user => {
+                const notification = {
+                    style: 'success',
+                    message: 'Se ha iniciado sesion'
+                }
+                dispatch(login(user))
+                navigate("/")
+                dispatch(showAlert(notification))
+            }).catch(error => {
+                const notification = {
+                    style: 'danger',
+                    message: String(error)
+                }
+                dispatch(showAlert(notification))
+            })
+    }
+
+    const fetchUser = (email, password) => {
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+        return delay(150)
+            .then(() => {
+                return (email != '' && password != '') ? { status: 201, user: { email: email, token: 'token' } } : { status: 400, message: 'Usuario no encontrado' }
+            })
+            .then((response) => {
+                if (response.status === 201) {
+                    return response.user
+                } else if (response.status === 400) {
+                    throw new Error("Usuario no encontrado")
+                } else {
+                    throw new Error("Error en la solicitud")
+                }
+            })
     }
 
     return (
-        <div>
-            <h1>Login Page</h1>
+        <Card style={{ maxWidth: '400px', margin: '50px auto', padding: '50px' }}>
+            <Card.Title style={{ marginBottom: '20px' }}>Iniciar Sesion</Card.Title>
             <Form>
                 <Form.Group className="mb-3">
                     <Form.Label className="form-label" htmlFor="login-email">Correo electronico</Form.Label>
@@ -42,7 +70,7 @@ const Login = () => {
                 </Form.Group>
                 <Button type="button" className="btn btn-primary" onClick={handleLogin}>Iniciar Sesion</Button>
             </Form>
-        </div>
+        </Card>
     )
 }
 
