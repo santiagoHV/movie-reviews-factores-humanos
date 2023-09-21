@@ -4,6 +4,7 @@ import CardMovie from "../CardMovie/CardMovie"
 import './CarouselCard.css'
 
 const CarouselCard = ({ movies, size }) => {
+    size = window.innerWidth <720 ? 1 : window.innerWidth<1280 ? 3 : window.innerWidth< 1920 ? 5 : 8
     const groups = []
     let index = 0
     while (index < movies.length) {
