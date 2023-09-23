@@ -1,0 +1,10 @@
+.cardCarousel .carousel-inner{
+    width: 90%;
+    left: 5%;
+}
+.cardCarousel .card{
+    margin-left: 20px;
+}
+.cardCarousel .carousel-control-prev, .carousel-control-next{
+    width: 5%;
+}

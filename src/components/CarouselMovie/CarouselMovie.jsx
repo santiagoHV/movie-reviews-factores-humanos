@@ -1,10 +1,11 @@
 import Carousel from 'react-bootstrap/Carousel';
 import CarouselImage from '../CarouselImage/CarouselImage';
+import './CarouselMovie.css'
 
 function CarouselMovie({ movies }) {
   return (
     <div>
-      <Carousel>
+      <Carousel className='bannerDisplay'>
         {movies.map((movie, index) => (
           <Carousel.Item key={index}>
             <CarouselImage text={movie.title} path={movie.image} />
