@@ -1,0 +1,23 @@
+.cardMovie {
+    width: 18rem;
+    height: 25rem;
+    padding: 0;
+    border: 0;
+}
+
+.cardMovie img {
+    height: 100%;
+}
+
+.cardMovie .card-img-overlay * {
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cardMovie .card-img-overlay:hover * {
+    opacity: 1;
+}
+.cardMovie:hover img {
+    filter: brightness(0.2)
+  }

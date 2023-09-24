@@ -7,6 +7,7 @@ import Movie from './pages/movie/movie'
 import Profile from './pages/profile/profile'
 import Login from './pages/login/login'
 import Logout from './pages/login/logout'
+import Admin from './pages/admin/admin'
 import { Route, Routes } from 'react-router-dom'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/movie" element={<Movie />} />
         <Route path="/login" element={<Login />} />
         <Route path='/logout' element={<Logout />} />
+        <Route path='/admin' element={<Admin />} />
       </Routes>
     </>
   )
