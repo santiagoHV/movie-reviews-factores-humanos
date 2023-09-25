@@ -1,3 +1,28 @@
-.navbar{
+.navbar {
     background-color: #88BdFF !important;
+}
+
+.navbar-nav {
+    flex: 1;
+    justify-content: space-between;
+}
+
+.navbar-nav #navbar-main-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-nav #navbar-alt-content {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 992px) {
+    .navbar-nav #navbar-main-content {
+        flex-direction: row;
+    }
+
+    .navbar-nav #navbar-alt-content {
+        flex-direction: row;
+    }
 }
