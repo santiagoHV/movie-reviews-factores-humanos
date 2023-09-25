@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './CardMovie.css'
@@ -11,7 +12,9 @@ function CardMovie({ title, image, description }) {
         <Card.Text>
           {description}
         </Card.Text>
-        <Button variant="primary">Opinar</Button>
+        <Link to="/movie">
+          <Button variant="primary">Opinar</Button>
+        </Link>
       </Card.ImgOverlay>
     </Card>
   );

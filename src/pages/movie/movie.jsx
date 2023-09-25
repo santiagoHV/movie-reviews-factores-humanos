@@ -9,7 +9,7 @@ const reviewsData = [
     {
         id: 1,
         name: "Jhon Doe",
-        qualification: 4,
+        qualification: 3,
         review: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat animi consectetur repellat, architecto optio accusamus temporibus ullam! Voluptatibus doloribus vel unde beatae incidunt, aspernatur fugit, laudantium, odio corporis eum sit."
     },
     {
@@ -21,7 +21,7 @@ const reviewsData = [
     {
         id: 3,
         name: "Jhon Doe",
-        qualification: 4,
+        qualification: 5,
         review: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat animi consectetur repellat, architecto optio accusamus temporibus ullam! Voluptatibus doloribus vel unde beatae incidunt, aspernatur fugit, laudantium, odio corporis eum sit."
     },
 ]

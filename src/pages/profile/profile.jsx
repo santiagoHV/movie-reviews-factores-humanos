@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row , Col} from "react-bootstrap";
+import ReviewBox from "../../components/ReviewBox/ReviewBox";
 
 const reviewsData = [
     {

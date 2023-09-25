@@ -26,3 +26,8 @@
 .bannerDisplay .carousel-caption h3{
     font-size: 2rem;
 }
+
+.titleMovie{
+    text-decoration: none;
+    color: white;
+}

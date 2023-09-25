@@ -63,12 +63,36 @@ const Home = () => {
                 <CarouselMovie movies={movies} />
             </main>
             <section>
-                <h2>Recomendado para ti <Badge bg="secondary">New</Badge></h2>
-                <CarouselCard movies={movies} size={5} />
+                <h2>Recomendado para ti <Badge bg="secondary">Nuevo</Badge></h2>
+                <CarouselCard movies={movies} />
             </section>
             <section>
                 <h2>Terror</h2>
-                <CarouselCard movies={movies} size={5} />
+                <CarouselCard movies={movies}  />
+            </section>
+            <section>
+                <h2>Drama</h2>
+                <CarouselCard movies={movies}  />
+            </section>
+            <section>
+                <h2>Acción</h2>
+                <CarouselCard movies={movies}  />
+            </section>
+            <section>
+                <h2>Anime</h2>
+                <CarouselCard movies={movies}  />
+            </section>
+            <section>
+                <h2>Romance</h2>
+                <CarouselCard movies={movies}  />
+            </section>
+            <section>
+                <h2>Ciencia ficción</h2>
+                <CarouselCard movies={movies}  />
+            </section>
+            <section>
+                <h2>Series</h2>
+                <CarouselCard movies={movies}  />
             </section>
         </div>
     )

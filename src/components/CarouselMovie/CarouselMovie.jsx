@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import CarouselImage from '../CarouselImage/CarouselImage';
 import './CarouselMovie.css'
@@ -10,7 +11,9 @@ function CarouselMovie({ movies }) {
           <Carousel.Item key={index}>
             <CarouselImage text={movie.title} path={movie.image} />
             <Carousel.Caption>
-              <h3>{movie.title}</h3>
+              <Link to="/movie" className='titleMovie'>
+                <h3>{movie.title}</h3>
+              </Link>
               <p>{movie.description}</p>
             </Carousel.Caption>
           </Carousel.Item>

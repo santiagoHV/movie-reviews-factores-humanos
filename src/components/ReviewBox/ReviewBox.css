@@ -9,3 +9,9 @@
     width: 80px;
     border-radius: 35px;
 }
+
+.userName{
+    text-decoration: none;
+    color: white;
+}
+

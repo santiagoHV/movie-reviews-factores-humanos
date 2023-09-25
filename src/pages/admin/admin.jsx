@@ -110,7 +110,7 @@ const Admin = () => {
     return (
         <>
             <section>
-                <h2>Peliculas por aprovar</h2>
+                <h2>Peliculas por aprobar</h2>
                 <ListDisplayer elements={movies} />
             </section>
             <section>
