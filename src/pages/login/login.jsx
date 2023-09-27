@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Card, Form, Button } from 'react-bootstrap';
 import { useDispatch } from "react-redux";
 import { login } from "../../reducers/authSlice";
@@ -70,6 +70,7 @@ const Login = () => {
                 </Form.Group>
                 <Button type="button" className="btn btn-primary" onClick={handleLogin}>Iniciar Sesion</Button>
             </Form>
+            <Link to={"/admin"}>¿Eres administrador?</Link>
         </Card>
     )
 }
