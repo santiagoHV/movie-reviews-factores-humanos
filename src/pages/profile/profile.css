@@ -9,9 +9,14 @@
   }
   
   .info-perfil {
+    
     margin-left: 1rem;
   }
   
+#perfil-image{
+    border-radius: 50%;
+}
+
   p {
     font-weight: bold;
   }
