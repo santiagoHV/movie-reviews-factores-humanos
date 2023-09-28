@@ -1,0 +1,27 @@
+.imagen-perfil {
+    width: 10%;
+  }
+  
+  .conteiner-perfil {
+    display: flex;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .info-perfil {
+    margin-left: 1rem;
+  }
+  
+  p {
+    font-weight: bold;
+  }
+  
+  .info-personal{
+      display: flex;
+  }
+  
+  .double-items{
+      display: flex;
+      flex-direction: column;
+      margin-right: 3rem;
+  }
