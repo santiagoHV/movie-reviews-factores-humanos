@@ -7,7 +7,7 @@ import StarQualification from "../StarQualification/StarQualification"
 
 const ReviewBox = () => {
     return (
-        <Container className="mb-4">
+        <Container className="mb-4 style-reseña" >
             <Row>
                 <Col sm={2} className="user-image-container" >
                     <Link to="/profile">
