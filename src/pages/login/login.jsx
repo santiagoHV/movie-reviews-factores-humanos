@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Card, Form, Button } from 'react-bootstrap';
 import { useDispatch } from "react-redux";
 import { login } from "../../reducers/authSlice";
@@ -12,16 +12,21 @@ const Login = () => {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
+        admin: false,
     })
 
     const handleLogin = () => {
-        fetchUser(formData.email, formData.password)
+        fetchUser(formData.email, formData.password, formData.admin)
             .then(user => {
                 const notification = {
                     style: 'success',
                     message: 'Se ha iniciado sesion'
                 }
-                dispatch(login(user))
+                const payload = {
+                    user: user,
+                    admin: formData.admin,
+                }
+                dispatch(login(payload))
                 navigate("/")
                 dispatch(showAlert(notification))
             }).catch(error => {
@@ -33,7 +38,7 @@ const Login = () => {
             })
     }
 
-    const fetchUser = (email, password) => {
+    const fetchUser = (email, password, admin) => {
         const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
         return delay(150)
             .then(() => {
@@ -68,9 +73,12 @@ const Login = () => {
                         password: event.target.value
                     })} />
                 </Form.Group>
+                <Form.Check type="checkbox" label="¿Eres administrador?" onChange={event => setFormData({
+                    ...formData,
+                    admin: !formData.admin
+                })}/>
                 <Button type="button" className="btn btn-primary" onClick={handleLogin}>Iniciar Sesion</Button>
             </Form>
-            <Link to={"/admin"}>¿Eres administrador?</Link>
         </Card>
     )
 }

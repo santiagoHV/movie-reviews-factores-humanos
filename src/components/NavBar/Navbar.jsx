@@ -8,6 +8,7 @@ import appName from "../../assets/appName.svg";
 
 const NavBar = () => {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
+    const isAdmin = useSelector(state => state.auth.isAdmin)
     const [expanded, setExpanded] = useState(false);
     const toggleNavbar = () => {
         setExpanded(!expanded);
@@ -51,6 +52,7 @@ const NavBar = () => {
                                     </Col>
                                 </Row>
                             </Form>
+                            {isAuthenticated&&isAdmin ? (<Nav.Link as={Link} to={"/admin"}>Portal de administración</Nav.Link>) : (<></>)}
                             {isAuthenticated ? (
                                 <Nav.Link as={Link} to="/logout">Cerrar Sesión</Nav.Link>
                             ) : (
