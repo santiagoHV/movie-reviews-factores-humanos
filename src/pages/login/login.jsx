@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, Form, Button } from 'react-bootstrap';
 import { useDispatch } from "react-redux";
 import { login } from "../../reducers/authSlice";
@@ -61,7 +61,7 @@ const Login = () => {
     }
 
     return (
-        <Card style={{ maxWidth: '400px', margin: '50px auto', padding: '50px' }}>
+        <Card style={{ maxWidth: '400px', margin: '50px auto', padding: '50px'}}>
             <Card.Title style={{ marginBottom: '20px' }}>Iniciar Sesion</Card.Title>
             <Form>
                 <Form.Group className="mb-3">
@@ -84,6 +84,9 @@ const Login = () => {
                 })} />
                 <Button type="button" className="btn btn-primary" onClick={handleLogin}>Iniciar Sesion</Button>
             </Form>
+            <Form.Text muted>
+                ¿Aún no tienes una cuenta? <Link to={"/register"}>Registrate</Link>
+            </Form.Text>
         </Card>
     )
 }

@@ -9,6 +9,7 @@ import Login from './pages/login/login'
 import Register from './pages/login/register'
 import Logout from './pages/login/logout'
 import Admin from './pages/admin/admin'
+import TermsAndConditions from './pages/policies/TermsAndConditions'
 import { Route, Routes } from 'react-router-dom'
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path='/logout' element={<Logout />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/policies' element={<TermsAndConditions />} />
       </Routes>
     </>
   )
