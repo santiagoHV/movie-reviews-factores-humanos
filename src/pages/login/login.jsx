@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, Form, Button } from 'react-bootstrap';
 import { useDispatch } from "react-redux";
 import { login } from "../../reducers/authSlice";
 import { showAlert } from "../../reducers/notificationSlice"
+import { backend_url } from '../../constants'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -38,25 +39,29 @@ const Login = () => {
             })
     }
 
-    const fetchUser = (email, password, admin) => {
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-        return delay(150)
-            .then(() => {
-                return (email != '' && password != '') ? { status: 201, user: { email: email, token: 'token' } } : { status: 400, message: 'Usuario no encontrado' }
-            })
-            .then((response) => {
-                if (response.status === 201) {
-                    return response.user
-                } else if (response.status === 400) {
-                    throw new Error("Usuario no encontrado")
-                } else {
-                    throw new Error("Error en la solicitud")
-                }
-            })
+    const fetchUser = async (email, password) => {
+        const response = await fetch(`${backend_url}/api/signin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        });
+
+        if (response.status === 201) {
+            const data = await response.json();
+            return data;
+        } else if (response.status === 400) {
+            throw new Error('Usuario no encontrado');
+        } else if (response.status === 401) {
+            throw new Error('Contraseña incorrecta');
+        } else {
+            throw new Error('Error al iniciar sesión');
+        }
     }
 
     return (
-        <Card style={{ maxWidth: '400px', margin: '50px auto', padding: '50px' }}>
+        <Card style={{ maxWidth: '400px', margin: '50px auto', padding: '50px'}}>
             <Card.Title style={{ marginBottom: '20px' }}>Iniciar Sesion</Card.Title>
             <Form>
                 <Form.Group className="mb-3">
@@ -76,9 +81,12 @@ const Login = () => {
                 <Form.Check type="checkbox" label="¿Eres administrador?" onChange={event => setFormData({
                     ...formData,
                     admin: !formData.admin
-                })}/>
+                })} />
                 <Button type="button" className="btn btn-primary" onClick={handleLogin}>Iniciar Sesion</Button>
             </Form>
+            <Form.Text muted>
+                ¿Aún no tienes una cuenta? <Link to={"/register"}>Registrate</Link>
+            </Form.Text>
         </Card>
     )
 }
