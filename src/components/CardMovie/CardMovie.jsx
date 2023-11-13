@@ -1,18 +1,31 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import './CardMovie.css'
+import Movie from '../../pages/movie/movie';
+import './CardMovie.css';
 
-function CardMovie({ title, image, description }) {
+function CardMovie({ title, image, description, director, year, genre }) {
   return (
     <Card className="cardMovie">
       <Card.Img src={image} />
       <Card.ImgOverlay>
         <Card.Title>{title}</Card.Title>
-        <Card.Text>
-          {description}
-        </Card.Text>
-        <Link to="/movie">
+        <Card.Text>{description}</Card.Text>
+        { }
+        <Link
+          to={{
+            pathname: '/movie',
+            state: {
+              title,
+              description,
+              image,
+              director,
+              year,
+              genre,
+            },
+          }}
+        >
           <Button variant="primary">Opinar</Button>
         </Link>
       </Card.ImgOverlay>

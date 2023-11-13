@@ -1,32 +1,67 @@
-.imagen-perfil {
-    width: 10%;
-  }
-  
-  .conteiner-perfil {
-    display: flex;
-    margin-top: 3rem;
-    margin-bottom: 1rem;
-  }
-  
-  .info-perfil {
-    
-    margin-left: 1rem;
-  }
-  
-#perfil-image{
-    border-radius: 50%;
+.conteiner-img-perfil {
+  height: 200px;
+  width: 200px;
 }
 
-  p {
-    font-weight: bold;
-  }
-  
-  .info-personal{
-      display: flex;
-  }
-  
-  .double-items{
-      display: flex;
-      flex-direction: column;
-      margin-right: 3rem;
-  }
+.imagen-perfil {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.conteiner-perfil {
+  display: flex;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border-radius: 15px;
+  padding: 10px;
+  border: solid rgba(255, 255, 255, 0.403) 0.5px;
+  background-color: rgba(255, 255, 255, 0.088);
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1), 0 8px 16px rgba(255, 255, 255, 0.1);
+
+  align-items: center;
+  display: flex;
+  justify-content:space-around;
+
+}
+
+.info-perfil {
+  margin-left: 1rem;
+  width: 60%;
+}
+
+#perfil-image {
+  border-radius: 50%;
+}
+
+p {
+  font-weight: bold;
+}
+
+.info-personal {
+  display: flex;
+}
+
+.double-items {
+  display: flex;
+  flex-direction: column;
+  margin-right: 3rem;
+}
+
+.editar-perfil {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.icon-info-personal{
+  height: 25px;
+  width: 25px;
+}
+
+.btn-actualizar{
+margin: 2rem 0rem;
+}
