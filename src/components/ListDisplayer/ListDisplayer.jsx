@@ -6,6 +6,9 @@ import { useState } from 'react'
 
 const ListDisplayer = ({ elements }) => {
     const [page, setPage] = useState(1)
+    if (elements.length===0){
+        return
+    }
     const pages = []
     const groups = []
     let index = 0
@@ -26,10 +29,10 @@ const ListDisplayer = ({ elements }) => {
         <>
             <ListGroup>
                 {groups[page-1].map((element, index) => {
+                    console.log(element);
                     return (
                         <ListGroup.Item key={index}>
                             <h6>{element.name}</h6>
-                            {element.data}
                             <Button as={Link} to={element.url}>Ir</Button>
                         </ListGroup.Item>
                     )

@@ -13,7 +13,6 @@ const Login = () => {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
-        admin: false,
     })
 
     const handleLogin = () => {
@@ -25,7 +24,7 @@ const Login = () => {
                 }
                 const payload = {
                     user: user,
-                    admin: formData.admin,
+                    admin: true,
                 }
                 dispatch(login(payload))
                 navigate("/")
@@ -40,7 +39,7 @@ const Login = () => {
     }
 
     const fetchUser = async (email, password) => {
-        const response = await fetch(`${backend_url}/api/signin`, {
+        const response = await fetch(`${backend_url}/api/auth/signin`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,10 +77,6 @@ const Login = () => {
                         password: event.target.value
                     })} />
                 </Form.Group>
-                <Form.Check type="checkbox" label="¿Eres administrador?" onChange={event => setFormData({
-                    ...formData,
-                    admin: !formData.admin
-                })} />
                 <Button type="button" className="btn btn-primary" onClick={handleLogin}>Iniciar Sesion</Button>
             </Form>
             <Form.Text muted>

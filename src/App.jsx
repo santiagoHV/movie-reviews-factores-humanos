@@ -11,6 +11,7 @@ import Logout from './pages/login/logout'
 import Admin from './pages/admin/admin'
 import TermsAndConditions from './pages/policies/TermsAndConditions'
 import { Route, Routes } from 'react-router-dom'
+import AproveMovie from './pages/admin/aproveMovie'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <Route path='/admin' element={<Admin />} />
         <Route path='/register' element={<Register />} />
         <Route path='/policies' element={<TermsAndConditions />} />
+        <Route path='/admin/movie/:id' element={<AproveMovie />} />
       </Routes>
     </>
   )
