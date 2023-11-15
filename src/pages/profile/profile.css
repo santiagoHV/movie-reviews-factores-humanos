@@ -65,3 +65,23 @@ p {
 .btn-actualizar{
 margin: 2rem 0rem;
 }
+
+.modal-title{
+  color: rgb(49, 108, 244);
+}
+
+.form-label{
+  color: rgb(49, 108, 244);
+}
+
+.nav-tabs > .nav-item .active {
+  background-color:rgb(27, 39, 51);
+}
+
+.nav-tabs > .nav-item > .nav-link{
+  color:white;
+}
+
+.nav-tabs > .nav-item > .active{
+  color: rgb(49, 108, 244);
+}
