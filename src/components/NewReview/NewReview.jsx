@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./NewReview.css";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Button } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
 
 const NewReview = ({ name, qualification, review, profileImage, isMovie }) => {
   const toLink = isMovie ? "/movie" : "/profile";
 
   return (
-    <Container className="mb-4 style-reseña">
+    <Container className="mb-4 style-resena">
       <Row>
         <Col sm={2} className="user-image-container">
           <Link to={toLink}>
@@ -20,6 +20,7 @@ const NewReview = ({ name, qualification, review, profileImage, isMovie }) => {
             <h3>{name}</h3>
           </Link>
           <textarea
+            className="textarea-comment"
             maxLength="240"
             placeholder="Escriba su comentario aquí..."
             required
@@ -28,11 +29,11 @@ const NewReview = ({ name, qualification, review, profileImage, isMovie }) => {
             <ReactStars
               count={5}
               size={24}
-              edit={false}
+              edit={true}
               value={qualification}
               activeColor="#ffd700"
             />
-            <input type="submit" value="Subir comentario" className="btnComment"/>
+            <Button type="submit" className="btnComment">Subir comentario</Button>
           </div>
         </Col>
       </Row>

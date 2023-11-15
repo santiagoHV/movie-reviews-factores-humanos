@@ -15,16 +15,17 @@
   color: white;
 }
 
-.style-reseña {
+.style-resena {
   background: #021321;
   color: #ffffff;
-  border: #333 solid 1px;
+  border: #4e4d4d solid 1px;
   border-radius: 5px;
 }
 
-.style-reseña:hover {
-  box-sizing: border-box;
-  background: #0069c0;
+.style-resena:hover {
+  background-color: rgba(255, 255, 255, 0.088);
+  border: #7b7b7b solid 1px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1), 0 8px 16px rgba(255, 255, 255, 0.1);
 }
 
 textarea {
@@ -46,8 +47,6 @@ textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #141414;
-  color: white;
   margin: 0 0 10px 50px;
   border-radius: 10px;
   font-family: "Roboto", sans-serif;
@@ -56,7 +55,7 @@ textarea {
   overflow: hidden;
 }
 
-.btnComment:hover {
-  background-color: white;
-  color: black
+
+.textarea-comment{
+  border-radius: 5px;
 }

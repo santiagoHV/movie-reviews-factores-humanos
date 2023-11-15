@@ -8,7 +8,7 @@ const ReviewBox = ({ name, qualification, review, profileImage, isMovie }) => {
     const toLink = isMovie ? "/movie" : "/profile";
 
     return (
-        <Container className="mb-4 style-reseña">
+        <Container className="mb-4 style-resena">
             <Row>
                 <Col sm={2} className="user-image-container">
                     <Link to={toLink}>
