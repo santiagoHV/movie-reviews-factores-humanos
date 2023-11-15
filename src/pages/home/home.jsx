@@ -1,6 +1,7 @@
 import CarouselMovie from '../../components/CarouselMovie/CarouselMovie';
 import Badge from 'react-bootstrap/Badge';
 import CarouselCard from "../../components/CarouselCard/CarouselCard";
+import FloatingButton from "../../components/FloatingButton/FloatingButton";
 import './home.css'
 
 const Home = () => {
@@ -86,47 +87,47 @@ const Home = () => {
       "category": "Aventura"
     }
   ];
-  
 
-    return (
-        <div>
-            <main>
-                <CarouselMovie movies={movies} />
-            </main>
-            <section>
-                <h2>Recomendado para ti <Badge bg="secondary">Nuevo</Badge></h2>
-                <CarouselCard movies={movies} />
-            </section>
-            <section>
-                <h2>Terror</h2>
-                <CarouselCard movies={movies}  />
-            </section>
-            <section>
-                <h2>Drama</h2>
-                <CarouselCard movies={movies}  />
-            </section>
-            <section>
-                <h2>Acción</h2>
-                <CarouselCard movies={movies}  />
-            </section>
-            <section>
-                <h2>Anime</h2>
-                <CarouselCard movies={movies}  />
-            </section>
-            <section>
-                <h2>Romance</h2>
-                <CarouselCard movies={movies}  />
-            </section>
-            <section>
-                <h2>Ciencia ficción</h2>
-                <CarouselCard movies={movies}  />
-            </section>
-            <section>
-                <h2>Series</h2>
-                <CarouselCard movies={movies}  />
-            </section>
-        </div>
-    )
+  return (
+    <div>
+      <FloatingButton buttonText="Agregar pelicula"/>
+      <main>
+        <CarouselMovie movies={movies} />
+      </main>
+      <section>
+        <h2>Recomendado para ti <Badge bg="secondary">Nuevo</Badge></h2>
+        <CarouselCard movies={movies} />
+      </section>
+      <section>
+        <h2>Terror</h2>
+        <CarouselCard movies={movies} />
+      </section>
+      <section>
+        <h2>Drama</h2>
+        <CarouselCard movies={movies} />
+      </section>
+      <section>
+        <h2>Acción</h2>
+        <CarouselCard movies={movies} />
+      </section>
+      <section>
+        <h2>Anime</h2>
+        <CarouselCard movies={movies} />
+      </section>
+      <section>
+        <h2>Romance</h2>
+        <CarouselCard movies={movies} />
+      </section>
+      <section>
+        <h2>Ciencia ficción</h2>
+        <CarouselCard movies={movies} />
+      </section>
+      <section>
+        <h2>Series</h2>
+        <CarouselCard movies={movies} />
+      </section>
+    </div>
+  )
 }
 
 export default Home;
