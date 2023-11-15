@@ -42,9 +42,6 @@ const reviewsData = [
 const newReview = {
   id: 4,
   name: "Alma Marcela Gozo",
-  qualification: 5,
-  review:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat animi consectetur repellat, architecto optio accusamus temporibus ullam! Voluptatibus doloribus vel unde beatae incidunt, aspernatur fugit, laudantium, odio corporis eum sit.",
   image:
     "https://th.bing.com/th/id/OIP.3qpmiW3xheSmoUrlOzpWtQHaHa?pid=ImgDet&w=1600&h=1600&rs=1",
 };
