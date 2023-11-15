@@ -19,14 +19,21 @@ const NewReview = ({ name, qualification, review, profileImage, isMovie }) => {
           <Link to={toLink} className="userName">
             <h3>{name}</h3>
           </Link>
-          <textarea maxLength="250" placeholder="Escriba su comentario aquí..."/>
-          <ReactStars
-            count={5}
-            size={24}
-            edit={false}
-            value={qualification}
-            activeColor="#ffd700"
+          <textarea
+            maxLength="240"
+            placeholder="Escriba su comentario aquí..."
+            required
           />
+          <div className="start">
+            <ReactStars
+              count={5}
+              size={24}
+              edit={false}
+              value={qualification}
+              activeColor="#ffd700"
+            />
+            <input type="submit" value="Subir comentario" className="btnComment"/>
+          </div>
         </Col>
       </Row>
     </Container>
