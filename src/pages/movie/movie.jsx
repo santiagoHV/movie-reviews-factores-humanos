@@ -3,6 +3,7 @@ import "./movie.css";
 import ReactStars from "react-rating-stars-component";
 import { Col, Row, Container } from "react-bootstrap";
 import ReviewBox from "../../components/ReviewBox/ReviewBox";
+import NewReview from "../../components/NewReview/NewReview";
 
 const movieDemo = {
     title: "El Silencio de los Corderos",
@@ -37,6 +38,16 @@ const reviewsData = [
         image: "https://i0.wp.com/lamiradafotografia.es/wp-content/uploads/2014/07/simpson-rock.jpg",
     },
 ]
+
+const newReview = {
+  id: 4,
+  name: "Alma Marcela Gozo",
+  qualification: 5,
+  review:
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat animi consectetur repellat, architecto optio accusamus temporibus ullam! Voluptatibus doloribus vel unde beatae incidunt, aspernatur fugit, laudantium, odio corporis eum sit.",
+  image:
+    "https://th.bing.com/th/id/OIP.3qpmiW3xheSmoUrlOzpWtQHaHa?pid=ImgDet&w=1600&h=1600&rs=1",
+};
 
 const Movie = () => {
     return (
@@ -80,6 +91,11 @@ const Movie = () => {
                 profileImage={r.image}
                 key={r.id}
             />)}
+            <NewReview
+                name={newReview.name}
+                profileImage={newReview.image}
+                key={newReview.id}
+            />
         </Container>
     )
 }
