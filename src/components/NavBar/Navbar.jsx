@@ -1,10 +1,10 @@
 import { useState } from "react";
-import './Navbar.css';
 import { Navbar, Container, Nav, Form, Button, Row, Col } from 'react-bootstrap';
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import appName from "../../assets/appName.svg";
+import './Navbar.css';
 
 const NavBar = () => {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)

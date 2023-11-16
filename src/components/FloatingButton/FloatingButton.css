@@ -18,9 +18,9 @@
 
 .floating-button:hover {
     width: 150px;
-    height: 40px;
+    height: 50px;
     border-radius: 40px;
-    transition: width 0.3s;
+    transition: width 0.1s;
 }
 
 .texto-btn-flotante {
