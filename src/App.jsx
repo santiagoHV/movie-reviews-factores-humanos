@@ -1,6 +1,7 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import NavBar from './components/NavBar/Navbar'
+import NewMovie from './components/NewMovie/NewMovie'
 import AlertComponent from './components/AlertComponent/AlertComponent'
 import Home from './pages/home/home'
 import Movie from './pages/movie/movie'
@@ -26,6 +27,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path='/logout' element={<Logout />} />
         <Route path='/admin' element={<Admin />} />
+        <Route path='/newMovie' element={<NewMovie />} />
         <Route path='/register' element={<Register />} />
         <Route path='/policies' element={<TermsAndConditions />} />
         <Route path='/admin/movie/:id' element={<AproveMovie />} />

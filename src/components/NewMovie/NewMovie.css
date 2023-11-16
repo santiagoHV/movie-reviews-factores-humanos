@@ -1,0 +1,27 @@
+
+.form-conteiner-nm > div > .form-label{
+    margin-top: 12px;
+    margin-bottom: 0%;
+}
+
+.form-conteiner-nm > div >  .form-control{
+ margin: 0;
+}
+
+.nm-title{
+    text-align: center;
+}
+
+#textApprovalPolicy {
+    text-align: justify;
+    margin-top: 50px;
+    margin-bottom: 5px;
+}
+.form-conteiner-nm > div {
+    justify-content: center;
+}
+
+.form-conteiner-nm > div > .btn-nm-add{
+    text-align: center;
+    justify-content: center;
+}
