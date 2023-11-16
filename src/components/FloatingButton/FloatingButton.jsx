@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import './FloatingButton.css';
 
-
-const FloatingButton = ({ buttonText }) => {
+const FloatingButton = ({ buttonText, to }) => {
     const [hovered, setHovered] = useState(false);
     const [showRectangle, setShowRectangle] = useState(false);
     const [showText, setShowText] = useState(false);
@@ -14,7 +14,7 @@ const FloatingButton = ({ buttonText }) => {
 
         setTimeout(() => {
             setShowText(true);
-        }, 350);
+        }, 150);
     };
 
     const handleMouseLeave = () => {
@@ -23,21 +23,16 @@ const FloatingButton = ({ buttonText }) => {
         setShowText(false);
     };
 
-    const handleClick = () => {
-        alert('Botón clickeado');
-    };
-
     return (
         <div>
             {showRectangle && (
-                <div className="floating-button" onMouseLeave={handleMouseLeave} onClick={handleClick}>
+                <Link to={"/newMovie"} className="floating-button" onMouseLeave={handleMouseLeave}>
                     {showText && <p className='texto-btn-flotante'>{buttonText}</p>}
-                </div>
+                </Link>
             )}
             {!hovered && (
                 <div
                     className="floating-button"
-                    onClick={handleClick}
                     onMouseEnter={handleMouseEnter}
                 >
                     <FaPlus />
