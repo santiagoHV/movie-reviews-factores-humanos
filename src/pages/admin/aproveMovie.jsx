@@ -34,7 +34,7 @@ const AproveMovie = () => {
             }
         })
     }
-    
+
     return (
         <>
             <h2>{movie.title}</h2>

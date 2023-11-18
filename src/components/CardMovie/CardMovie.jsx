@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Movie from '../../pages/movie/movie';
 import './CardMovie.css';
 
-function CardMovie({ title, image, description, director, year, genre }) {
+function CardMovie({ title, image, description, director, year, genre, id }) {
   return (
     <Card className="cardMovie">
       <Card.Img src={image} />
@@ -15,7 +15,7 @@ function CardMovie({ title, image, description, director, year, genre }) {
         { }
         <Link
           to={{
-            pathname: '/movie',
+            pathname: `/movie/${id}`,
             state: {
               title,
               description,
