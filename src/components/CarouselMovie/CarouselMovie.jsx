@@ -11,7 +11,7 @@ function CarouselMovie({ movies }) {
           <Carousel.Item key={index}>
             <CarouselImage text={movie.title} path={movie.image} />
             <Carousel.Caption>
-              <Link to="/movie" className='titleMovie'>
+              <Link to={`/movie/${movie.id}`} className='titleMovie'>
                 <h3>{movie.title}</h3>
               </Link>
               <p>{movie.description}</p>

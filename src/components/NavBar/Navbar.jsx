@@ -36,7 +36,7 @@ const NavBar = () => {
                     <Nav>
                         <div id="navbar-main-content">
                             <Nav.Link as={Link} to="/">Inicio</Nav.Link>
-                            <Nav.Link as={Link} to="/profile">Perfil</Nav.Link>
+                            {isAuthenticated ? (<Nav.Link as={Link} to="/profile">Perfil</Nav.Link>) : ''}
                         </div>
                         <div id="navbar-alt-content">
                             <Form>
@@ -52,7 +52,7 @@ const NavBar = () => {
                                     </Col>
                                 </Row>
                             </Form>
-                            {isAuthenticated&&isAdmin ? (<Nav.Link as={Link} to={"/admin"}>Portal de administración</Nav.Link>) : (<></>)}
+                            {isAuthenticated && isAdmin ? (<Nav.Link as={Link} to={"/admin"}>Portal de administración</Nav.Link>) : (<></>)}
                             {isAuthenticated ? (
                                 <Nav.Link as={Link} to="/logout">Cerrar Sesión</Nav.Link>
                             ) : (

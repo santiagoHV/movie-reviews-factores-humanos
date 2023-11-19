@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 const ListDisplayer = ({ elements }) => {
     const [page, setPage] = useState(1)
-    if (elements.length===0){
+    if (elements.length === 0) {
         return
     }
     const pages = []
@@ -18,7 +18,7 @@ const ListDisplayer = ({ elements }) => {
     }
     for (let number = 1; number <= groups.length; number++) {
         pages.push(
-            <Pagination.Item key={number} active={number === page} onClick={()=>{
+            <Pagination.Item key={number} active={number === page} onClick={() => {
                 setPage(number)
             }}>
                 {number}
@@ -26,10 +26,9 @@ const ListDisplayer = ({ elements }) => {
         );
     }
     return (
-        <>
+        <div className='list-container'>
             <ListGroup>
-                {groups[page-1].map((element, index) => {
-                    console.log(element);
+                {groups[page - 1].map((element, index) => {
                     return (
                         <ListGroup.Item key={index}>
                             <h6>{element.name}</h6>
@@ -43,7 +42,7 @@ const ListDisplayer = ({ elements }) => {
                 {pages}
                 <Pagination.Next />
             </Pagination>
-        </>
+        </div>
 
     )
 }
