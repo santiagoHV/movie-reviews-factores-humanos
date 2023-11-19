@@ -25,7 +25,7 @@ const Movie = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                data.published ? setMovie(data) : navigate("/") 
+                data.published ? setMovie(data) : navigate("/")
             })
     }, [id, navigate])
     return (

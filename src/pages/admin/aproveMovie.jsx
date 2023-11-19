@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"
 import { Button } from "react-bootstrap"
 
 import { backend_url } from '../../constants'
+import LoadingIcon from "../../components/loadingIcon/loadingIcon"
 
 const AproveMovie = () => {
 
@@ -24,7 +25,6 @@ const AproveMovie = () => {
             method: 'GET'
         }).then((response) => response.json())
             .then((data) => {
-                console.log(data.published);
                 data.published ? navigate("/admin") : setMovie(data)
             })
     }, [id, navigate])
@@ -41,10 +41,10 @@ const AproveMovie = () => {
     return (
         <>
             {movie ? (
-                <main>
+                <main style={{margin:"50px 4%"}}>
                     {console.log(movie)}
                     <h2>{movie.title}</h2>
-                    <img src={movie.image} alt={movie.title} height={400} />
+                    <img src={movie.image} alt={movie.title} width={300} />
                     <p>
                         <strong>Director:</strong> {movie.director}
                     </p>
@@ -55,14 +55,14 @@ const AproveMovie = () => {
                         <strong>Año:</strong> {movie.year}
                     </p>
                     <p>
-                        <strong>Clasificación:</strong> {movie.clasification}
+                        <strong>Genero:</strong> {movie.categories.map(category => category.name).join(', ')}
                     </p>
                     <Button onClick={() => {
                         publishMovie()
                         navigate("/admin")
                     }}>Aprobar</Button>
                 </main>
-            ) : ''}
+            ) : <LoadingIcon/>}
         </>
     )
 }

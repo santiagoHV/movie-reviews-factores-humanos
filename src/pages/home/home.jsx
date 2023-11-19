@@ -2,6 +2,7 @@ import CarouselMovie from '../../components/CarouselMovie/CarouselMovie';
 import Badge from 'react-bootstrap/Badge';
 import CarouselCard from "../../components/CarouselCard/CarouselCard";
 import FloatingButton from "../../components/FloatingButton/FloatingButton";
+import LoadingIcon from "../../components/loadingIcon/loadingIcon"
 import { useEffect, useState } from 'react';
 import { backend_url } from '../../constants'
 
@@ -44,7 +45,7 @@ const Home = () => {
             <CarouselCard movies={filteredMovies} />
           </section>
         )
-      }) : ''}
+      }) : <LoadingIcon/>}
     </div>
   )
 }
