@@ -17,14 +17,17 @@ const AproveMovie = () => {
 
     const token = useSelector(state => state.auth.user.token)
     const { id } = useParams()
-    const [movie, setMovie] = useState({})
+    const [movie, setMovie] = useState()
 
     useEffect(() => {
         fetch(`${backend_url}/api/movies/${id}`, {
             method: 'GET'
         }).then((response) => response.json())
-            .then((data) => setMovie(data.movie))
-    }, [id])
+            .then((data) => {
+                console.log(data.published);
+                data.published ? navigate("/admin") : setMovie(data)
+            })
+    }, [id, navigate])
 
     const publishMovie = () => {
         fetch(`${backend_url}/api/movies/admin/publish/${id}`, {
@@ -37,21 +40,29 @@ const AproveMovie = () => {
 
     return (
         <>
-            <h2>{movie.title}</h2>
-            <img src={movie.image} alt={movie.title} height={400} />
-            <p>
-                <strong>Director:</strong> {movie.director}
-            </p>
-            <p>
-                <strong>Descripción:</strong> {movie.description}
-            </p>
-            <p>
-                <strong>Año:</strong> {movie.year}
-            </p>
-            <p>
-                <strong>Clasificación:</strong> {movie.clasification}
-            </p>
-            <Button onClick={publishMovie}>Aprobar</Button>
+            {movie ? (
+                <main>
+                    {console.log(movie)}
+                    <h2>{movie.title}</h2>
+                    <img src={movie.image} alt={movie.title} height={400} />
+                    <p>
+                        <strong>Director:</strong> {movie.director}
+                    </p>
+                    <p>
+                        <strong>Descripción:</strong> <p>{movie.description}</p>
+                    </p>
+                    <p>
+                        <strong>Año:</strong> {movie.year}
+                    </p>
+                    <p>
+                        <strong>Clasificación:</strong> {movie.clasification}
+                    </p>
+                    <Button onClick={() => {
+                        publishMovie()
+                        navigate("/admin")
+                    }}>Aprobar</Button>
+                </main>
+            ) : ''}
         </>
     )
 }

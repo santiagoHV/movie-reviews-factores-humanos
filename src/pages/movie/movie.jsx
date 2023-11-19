@@ -4,32 +4,9 @@ import ReactStars from "react-rating-stars-component";
 import { Col, Row, Container } from "react-bootstrap";
 import ReviewBox from "../../components/ReviewBox/ReviewBox";
 import NewReview from "../../components/NewReview/NewReview";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { backend_url } from "../../constants";
-
-const movieDemo = {
-    title: "El Silencio de los Corderos",
-    description: "Un agente del FBI se une a un brillante pero perturbado psicólogo para atrapar a un asesino en serie conocido como 'Buffalo Bill'.",
-    image: "https://es.web.img2.acsta.net/r_1280_720/medias/nmedia/18/74/29/15/19757760.jpg",
-    director: "Jonathan Demme",
-    year: 1991,
-    category: "Thriller",
-    qualification: 4
-}
-
-const reviewsData = [
-    {
-        id: 1,
-        user: {
-            name: "Jhoe",
-            lastname: "Doe"
-        },
-        rating: 2,
-        comment: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat animi consectetur repellat, architecto optio accusamus temporibus ullam! Voluptatibus doloribus vel unde beatae incidunt, aspernatur fugit, laudantium, odio corporis eum sit.",
-        image: "https://img.asmedia.epimg.net/resizer/QMMtnAP2cuFTYMZRJYUa-dNRgDI=/1472x1104/cloudfront-eu-central-1.images.arcpublishing.com/diarioas/R5WXEXV3SVFWPFYUBVE2W234FA.jpg",
-    },
-]
 
 const newReview = {
     id: 4,
@@ -39,6 +16,7 @@ const newReview = {
 };
 
 const Movie = () => {
+    const navigate = useNavigate()
     const { id } = useParams()
     const [movie, setMovie] = useState()
     useEffect(() => {
@@ -47,10 +25,9 @@ const Movie = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
-                setMovie(data)
+                data.published ? setMovie(data) : navigate("/") 
             })
-    }, [id])
+    }, [id, navigate])
     return (
         <>
             {movie ? (
@@ -83,7 +60,7 @@ const Movie = () => {
                                 <ul>
                                     <li tabIndex={3}>Director: {movie.director}</li>
                                     <li tabIndex={4}>Año: {movie.year}</li>
-                                    <li tabIndex={5}>Género: {movie.category}</li>
+                                    <li tabIndex={5}>Género: {movie.categories.map(category => category.name).join(', ')}</li>
                                 </ul>
                             </div>
                         </Col>

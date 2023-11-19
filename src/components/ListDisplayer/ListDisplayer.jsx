@@ -29,7 +29,6 @@ const ListDisplayer = ({ elements }) => {
         <>
             <ListGroup>
                 {groups[page-1].map((element, index) => {
-                    console.log(element);
                     return (
                         <ListGroup.Item key={index}>
                             <h6>{element.name}</h6>
