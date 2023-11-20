@@ -1,13 +1,18 @@
-import React from 'react';
+import { useState } from 'react';
+import poster from '../../assets/poster-placeholder.png'
 import './CarouselImage.css';
 
-function CarouselImage({ text , path}) {
+function CarouselImage({ text, path }) {
+  const [imageSrc, setImageSrc] = useState(path)
+  const handleImageError = () => {
+    setImageSrc(poster)
+  }
   return (
-
-<div className='container-image'>
+    <div className='container-image'>
       <img className='image-carousel'
-        src={path}
+        src={imageSrc}
         alt={text}
+        onError={handleImageError}
       />
     </div>
   );

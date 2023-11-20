@@ -5,8 +5,9 @@ import { Col, Row, Container } from "react-bootstrap";
 import ReviewBox from "../../components/ReviewBox/ReviewBox";
 import NewReview from "../../components/NewReview/NewReview";
 import { useParams, useNavigate } from "react-router-dom";
-
+import LoadingIcon from "../../components/loadingIcon/loadingIcon"
 import { backend_url } from "../../constants";
+import poster from '../../assets/poster-placeholder.png'
 
 const newReview = {
     id: 4,
@@ -19,6 +20,7 @@ const Movie = () => {
     const navigate = useNavigate()
     const { id } = useParams()
     const [movie, setMovie] = useState()
+    const [imageSrc, setImageSrc] = useState('')
     useEffect(() => {
         fetch(`${backend_url}/api/movies/${id}`, {
             method: 'GET'
@@ -26,20 +28,24 @@ const Movie = () => {
             .then((response) => response.json())
             .then((data) => {
                 data.published ? setMovie(data) : navigate("/")
+                setImageSrc(data.image)
             })
     }, [id, navigate])
+    const handleImageError = () => {
+        setImageSrc(poster)
+    }
     return (
         <>
             {movie ? (
                 <Container className="movie-container">
-
                     <Row className="mb-5">
                         <Col md={4}>
                             <figure>
                                 <img
                                     style={{ width: 300 + 'px' }}
                                     alt={`Portada de la película ${movie.title}`}
-                                    src={movie.image}
+                                    src={imageSrc}
+                                    onError={handleImageError}
                                 />
                                 <figcaption>
                                     {`Portada de la película ${movie.title}`}
@@ -78,7 +84,7 @@ const Movie = () => {
                         key={newReview.id}
                     />
                 </Container>
-            ) : ''}
+            ) : <LoadingIcon />}
         </>
     )
 }

@@ -1,5 +1,4 @@
 import CarouselMovie from '../../components/CarouselMovie/CarouselMovie';
-import Badge from 'react-bootstrap/Badge';
 import CarouselCard from "../../components/CarouselCard/CarouselCard";
 import FloatingButton from "../../components/FloatingButton/FloatingButton";
 import LoadingIcon from "../../components/loadingIcon/loadingIcon"
@@ -37,15 +36,15 @@ const Home = () => {
       </main>
       {categories.length > 0 ? categories.map((category, index) => {
         const filteredMovies = movies.filter((movie) => {
-          return movie.categories.some((cat) => cat.name = category.name)
+          return movie.categories.some((cat) => cat.name === category.name)
         })
-        return (
+        return filteredMovies.length > 0 ? (
           <section key={index}>
             <h2 >{category.name}</h2>
             <CarouselCard movies={filteredMovies} />
           </section>
-        )
-      }) : <LoadingIcon/>}
+        ) : null
+      }) : <LoadingIcon />}
     </div>
   )
 }

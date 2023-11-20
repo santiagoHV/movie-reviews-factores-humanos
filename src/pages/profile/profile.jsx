@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Row, Tabs, Tab, Form, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import ReviewBox from "../../components/ReviewBox/ReviewBox";

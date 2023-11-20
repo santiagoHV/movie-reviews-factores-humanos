@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap"
 
 import { backend_url } from '../../constants'
 import LoadingIcon from "../../components/loadingIcon/loadingIcon"
+import poster from '../../assets/poster-placeholder.png'
 
 const AproveMovie = () => {
 
@@ -19,6 +20,7 @@ const AproveMovie = () => {
     const token = useSelector(state => state.auth.user.token)
     const { id } = useParams()
     const [movie, setMovie] = useState()
+    const [imageSrc, setImageSrc] = useState('')
 
     useEffect(() => {
         fetch(`${backend_url}/api/movies/${id}`, {
@@ -26,6 +28,7 @@ const AproveMovie = () => {
         }).then((response) => response.json())
             .then((data) => {
                 data.published ? navigate("/admin") : setMovie(data)
+                setImageSrc(data.image)
             })
     }, [id, navigate])
 
@@ -38,31 +41,34 @@ const AproveMovie = () => {
         })
     }
 
+    const handleImageError = () => {
+        setImageSrc(poster)
+    }
+
     return (
         <>
             {movie ? (
-                <main style={{margin:"50px 4%"}}>
-                    {console.log(movie)}
+                <main style={{ margin: "50px 4%" }}>
                     <h2>{movie.title}</h2>
-                    <img src={movie.image} alt={movie.title} width={300} />
-                    <p>
+                    <img src={imageSrc} alt={movie.title} width={300} onError={handleImageError}/>
+                    <section>
                         <strong>Director:</strong> {movie.director}
-                    </p>
-                    <p>
-                        <strong>Descripción:</strong> <p>{movie.description}</p>
-                    </p>
-                    <p>
+                    </section>
+                    <section>
+                        <strong>Descripción:</strong> {movie.description}
+                    </section>
+                    <section>
                         <strong>Año:</strong> {movie.year}
-                    </p>
-                    <p>
+                    </section>
+                    <section>
                         <strong>Genero:</strong> {movie.categories.map(category => category.name).join(', ')}
-                    </p>
+                    </section>
                     <Button onClick={() => {
                         publishMovie()
                         navigate("/admin")
                     }}>Aprobar</Button>
                 </main>
-            ) : <LoadingIcon/>}
+            ) : <LoadingIcon />}
         </>
     )
 }
