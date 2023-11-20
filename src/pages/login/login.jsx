@@ -22,7 +22,6 @@ const Login = () => {
                     style: 'success',
                     message: 'Se ha iniciado sesion'
                 }
-                console.log(user);
                 const payload = {
                     user: user,
                     admin: user.role==='admin'?true:false,

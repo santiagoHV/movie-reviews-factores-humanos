@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from 'react-router-dom';
 import './ReviewBox.css';
 import { Col, Container, Row } from "react-bootstrap";

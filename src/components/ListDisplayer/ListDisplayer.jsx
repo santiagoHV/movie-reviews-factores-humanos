@@ -6,6 +6,7 @@ import { useState } from 'react'
 
 const ListDisplayer = ({ elements }) => {
     const [page, setPage] = useState(1)
+    const pageSize = 10
     if (elements.length === 0) {
         return
     }
@@ -13,8 +14,8 @@ const ListDisplayer = ({ elements }) => {
     const groups = []
     let index = 0
     while (index < elements.length) {
-        groups.push(elements.slice(index, index + 5))
-        index += 5
+        groups.push(elements.slice(index, index + pageSize))
+        index += pageSize
     }
     for (let number = 1; number <= groups.length; number++) {
         pages.push(
@@ -25,6 +26,32 @@ const ListDisplayer = ({ elements }) => {
             </Pagination.Item>,
         );
     }
+    const renderEllipsis = (key) => <Pagination.Ellipsis key={key} disabled />
+    const currentPagination = () => {
+        let pagination = [];
+        const addPage = (n) => {
+            if (n > 1 & n < pages.length) {
+                pagination.push(pages[n - 1])
+            }
+        }
+        if (pages.length <= 5) {
+            pagination = pages;
+        } else {
+            pagination.push(pages[0])
+            if (page > 3) {
+                pagination.push(renderEllipsis('ellipsisPrev'))
+            }
+
+            addPage(page - 1)
+            addPage(page)
+            addPage(page + 1)
+            if (page < pages.length - 2) {
+                pagination.push(renderEllipsis('ellipsisNext'))
+            }
+            pagination.push(pages[pages.length-1])
+        }
+        return pagination;
+    };
     return (
         <div className='list-container'>
             <ListGroup>
@@ -38,9 +65,13 @@ const ListDisplayer = ({ elements }) => {
                 })}
             </ListGroup>
             <Pagination>
-                <Pagination.Prev />
-                {pages}
-                <Pagination.Next />
+                <Pagination.Prev onClick={()=>{
+                    page>1?setPage(page-1):null
+                }}/>
+                {currentPagination()}
+                <Pagination.Next onClick={()=>{
+                    page<pages.length?setPage(page+1):null
+                }}/>
             </Pagination>
         </div>
 

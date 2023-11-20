@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import "./NewReview.css";
 import { Col, Container, Row, Button } from "react-bootstrap";
