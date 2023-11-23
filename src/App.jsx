@@ -13,6 +13,7 @@ import Admin from './pages/admin/admin'
 import TermsAndConditions from './pages/policies/TermsAndConditions'
 import { Route, Routes } from 'react-router-dom'
 import AproveMovie from './pages/admin/aproveMovie'
+import SearchResults from './pages/home/searchResults'
 
 function App() {
 
@@ -22,7 +23,7 @@ function App() {
       <AlertComponent/>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:userId" element={<Profile />} />
         <Route path="/movie/:id" element={<Movie />} />
         <Route path="/login" element={<Login />} />
         <Route path='/logout' element={<Logout />} />
@@ -31,6 +32,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/policies' element={<TermsAndConditions />} />
         <Route path='/admin/movie/:id' element={<AproveMovie />} />
+        <Route path='/search' element={ <SearchResults /> } />
       </Routes>
     </>
   )

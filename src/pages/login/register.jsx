@@ -22,7 +22,8 @@ const Register = () => {
         contract: false
     })
 
-    const handleRegister = () => {
+    const handleRegister = (e) => {
+        e.preventDefault()
         if (formData.name == "" | formData.lastname == "" | formData.email == "" | formData.birthdate == "") {
             const notification = {
                 style: 'danger',
@@ -120,31 +121,31 @@ const Register = () => {
     return (
         <Card style={{ maxWidth: '400px', margin: '50px auto', padding: '50px' }}>
             <Card.Title style={{ marginBottom: '20px' }}>Registro</Card.Title>
-            <Form>
+            <Form onSubmit={handleRegister}>
                 <Form.Group>
                     <Form.Label className="form-label" htmlFor="register-name">Nombre</Form.Label>
-                    <Form.Control type="text" className="form-control" id="register-name" onChange={event => setFormData({
+                    <Form.Control type="text" className="form-control" id="register-name" required onChange={event => setFormData({
                         ...formData,
                         name: event.target.value
                     })} />
                 </Form.Group>
                 <Form.Group>
                     <Form.Label className="form-label" htmlFor="register-lastname">Apellido</Form.Label>
-                    <Form.Control type="text" className="form-control" id="register-lastname" onChange={event => setFormData({
+                    <Form.Control type="text" className="form-control" id="register-lastname" required onChange={event => setFormData({
                         ...formData,
                         lastname: event.target.value
                     })} />
                 </Form.Group>
                 <Form.Group>
                     <Form.Label className="form-label" htmlFor="register-email">Correo electronico</Form.Label>
-                    <Form.Control type="email" className="form-control" id="register-email" autoComplete="email" onChange={event => setFormData({
+                    <Form.Control type="email" className="form-control" id="register-email" autoComplete="email" required onChange={event => setFormData({
                         ...formData,
                         email: event.target.value
                     })} />
                 </Form.Group>
                 <Form.Group>
                     <Form.Label className="form-label" htmlFor="register-email">Contraseña</Form.Label>
-                    <Form.Control type="password" className="form-control" id="register-password" autoComplete="password" onChange={event => setFormData({
+                    <Form.Control type="password" className="form-control" id="register-password" autoComplete="password" required onChange={event => setFormData({
                         ...formData,
                         password: event.target.value
                     })} />
@@ -154,19 +155,19 @@ const Register = () => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Label className="form-label" htmlFor="register-email">Fecha de nacimiento</Form.Label>
-                    <Form.Control type="date" className="form-control" id="register-birthdate" autoComplete="birthdate" onChange={event => setFormData({
+                    <Form.Control type="date" className="form-control" id="register-birthdate" autoComplete="birthdate" required onChange={event => setFormData({
                         ...formData,
                         birthdate: event.target.value
                     })} />
                 </Form.Group>
                 <Form.Check>
-                    <FormCheck.Input type={'checkbox'} onChange={event => setFormData({
+                    <FormCheck.Input type={'checkbox'} required onChange={event => setFormData({
                         ...formData,
                         contract: !formData.contract
                     })} />
                     <FormCheck.Label>Acepto los {<Link to={"/policies"}>terminos y condiciones</Link>}</FormCheck.Label>
                 </Form.Check>
-                <Button type="button" className="btn btn-primary" onClick={handleRegister}>Registrarse</Button>
+                <Button type="submit" className="btn btn-primary">Registrarse</Button>
             </Form>
         </Card>
     )

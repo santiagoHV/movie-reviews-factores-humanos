@@ -2,15 +2,18 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import { backend_url } from '../../constants';
+import { useDispatch } from 'react-redux';
+import { showAlert } from "../../reducers/notificationSlice"
 
-function EditProfile({ nombre, apellido, fechaNacimiento, correo, genero }) {
+function EditProfile({ nombre, apellido, fechaNacimiento, correo, id, token }) {
+  const dispatch = useDispatch()
   const [show, setShow] = useState(false);
   const [formValues, setFormValues] = useState({
     nombre,
     apellido,
     fechaNacimiento,
     correo,
-    genero,
   });
 
   const handleClose = () => setShow(false);
@@ -24,8 +27,33 @@ function EditProfile({ nombre, apellido, fechaNacimiento, correo, genero }) {
     });
   };
 
-  const handleSaveChanges = () => {
-    console.log('Formulario actualizado:', formValues);
+  const handleSaveChanges = async () => {
+    const data = {
+      name: formValues.nombre,
+      lastname: formValues.apellido,
+      birthdate: formValues.fechaNacimiento,
+      email: formValues.correo
+    }
+    const response = await fetch(`${backend_url}/api/user/update/${id}`, {
+      method: 'PUT',
+      headers: {
+        'x-access-token': token
+      },
+      body: JSON.stringify(data)
+    })
+    let alert = null
+    if (response.ok) {
+      alert = {
+        style: 'success',
+        message: 'Información actualizada'
+      }
+    } else {
+      alert = {
+        style: 'danger',
+        message: 'Error al actualizar'
+      }
+    }
+    dispatch(showAlert(alert))
     handleClose();
   };
 
@@ -79,19 +107,6 @@ function EditProfile({ nombre, apellido, fechaNacimiento, correo, genero }) {
                 value={formValues.correo}
                 onChange={handleInputChange}
               />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGenero">
-              <Form.Label>Género</Form.Label>
-              <Form.Control
-                as="select"
-                name="genero"
-                value={formValues.genero}
-                onChange={handleInputChange}
-              >
-                <option value="masculino">Masculino</option>
-                <option value="femenino">Femenino</option>
-                <option value="otro">Otro</option>
-              </Form.Control>
             </Form.Group>
           </Form>
         </Modal.Body>

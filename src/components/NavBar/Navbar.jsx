@@ -1,18 +1,42 @@
 import { useState } from "react";
 import { Navbar, Container, Nav, Form, Button, Row, Col } from 'react-bootstrap';
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import appName from "../../assets/appName.svg";
 import './Navbar.css';
+import { useEffect } from "react";
+import { backend_url } from '../../constants'
 
 const NavBar = () => {
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-    const isAdmin = useSelector(state => state.auth.isAdmin)
+    const navigate = useNavigate()
+    const { user, isAuthenticated, isAdmin } = useSelector(state => state.auth)
+    const [userId, setUserId] = useState()
+    const [searchTerms, setSearchTerms] = useState("")
+    useEffect(() => {
+        const fetchUserId = async (email) => {
+            try {
+                const response = await fetch(`${backend_url}/api/users/getId/${email}`)
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                const data = await response.json()
+                setUserId(data.id)
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
+        user ? user.email ? (fetchUserId(user.email)) : null : null
+    }, [user])
     const [expanded, setExpanded] = useState(false);
     const toggleNavbar = () => {
         setExpanded(!expanded);
     };
+    const handleSearch = async (e) => {
+        e.preventDefault()
+        navigate(`search?terms=${encodeURIComponent(searchTerms)}`)
+    }
 
     return (
         <Navbar expand="lg" className="bg-body-tertiary" expanded={expanded}>
@@ -36,15 +60,18 @@ const NavBar = () => {
                     <Nav>
                         <div id="navbar-main-content">
                             <Nav.Link as={Link} to="/">Inicio</Nav.Link>
-                            {isAuthenticated ? (<Nav.Link as={Link} to="/profile">Perfil</Nav.Link>) : ''}
+                            {
+                                isAuthenticated && userId ? (<Nav.Link as={Link} to={`/profile/${userId}`}>Perfil</Nav.Link>) : ''
+                            }
                         </div>
                         <div id="navbar-alt-content">
-                            <Form>
+                            <Form onSubmit={handleSearch}>
                                 <Row>
                                     <Col xs="auto">
                                         <Form.Control
                                             type="text"
                                             placeholder="Titulos, generos"
+                                            onChange={(e) => setSearchTerms(e.target.value)}
                                         />
                                     </Col>
                                     <Col xs="auto">

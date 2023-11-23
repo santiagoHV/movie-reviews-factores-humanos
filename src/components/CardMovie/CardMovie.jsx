@@ -4,12 +4,17 @@ import Card from 'react-bootstrap/Card';
 import './CardMovie.css';
 import placeholder from '../../assets/poster-placeholder.png'
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 function CardMovie({ title, image, description, director, year, genre, id }) {
+  
   const [imageSrc, setImageSrc] = useState(image)
   const handleImageError = () => {
     setImageSrc(placeholder)
   }
+  useEffect(()=>{
+    setImageSrc(image)
+  },[image])
   return (
     <Card className="cardMovie">
       <Card.Img src={imageSrc} onError={handleImageError} />

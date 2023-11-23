@@ -3,8 +3,8 @@ import './ReviewBox.css';
 import { Col, Container, Row } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
 
-const ReviewBox = ({ name, qualification, review, profileImage, isMovie }) => {
-    const toLink = isMovie ? "/movie" : "/profile";
+const ReviewBox = ({ name, qualification, review, profileImage, isMovie, id }) => {
+    const toLink = isMovie ? `/movie/${id}` : `/profile/${id}`;
 
     return (
         <Container className="mb-4 style-resena">

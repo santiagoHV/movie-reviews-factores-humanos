@@ -34,6 +34,19 @@ const Movie = () => {
     const handleImageError = () => {
         setImageSrc(poster)
     }
+    const getUserId = async (email) => {
+        try {
+            const response = await fetch(`${backend_url}/api/users/getId/${email}`)
+            if (!response.ok) {
+                throw new Error(response.statusText)
+            }
+            const data = await response.json()
+            return data.id
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
     return (
         <>
             {movie ? (
@@ -77,6 +90,7 @@ const Movie = () => {
                         review={r.comment}
                         profileImage={'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg'}
                         key={r.id}
+                        id={getUserId(r.user.email)}
                     />)}
                     <NewReview
                         name={newReview.name}
