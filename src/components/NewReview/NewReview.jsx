@@ -2,28 +2,41 @@ import { Link } from "react-router-dom";
 import "./NewReview.css";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
-import { useState, useEffect } from "react"
+import { useState } from "react";
+import { backend_url } from "../../constants";
+import { useSelector } from "react-redux";
 
-const NewReview = ({ name, qualification, review, profileImage, isMovie, id }) => {
-  const toLink = isMovie ? `/movie/${id}` : `/profile/${id}`;
-  const [imageSrc, setImageSrc] = useState(null);
-  useEffect(() => {
-    const loadImage = async () => {
-      try {
-        const imageUrl = await profileImage;
-        setImageSrc(imageUrl);
-      } catch (error) {
-        console.error('Error loading image:', error);
-      }
+const NewReview = ({ name, profileImage, userId, movieId }) => {
+  const token = useSelector(state=>state.auth.user.token)
+  const toLink = `/profile/${userId}`;
+  const [newReviewData, setNewReviewData] = useState({
+    comment: "",
+    rating: 0
+  })
+  const handleSubmit = async () => {
+    console.log(newReviewData);
+    const response = await fetch(`${backend_url}/api/movies/review/${movieId}`,{
+      method: 'POST',
+      headers:{
+        "Content-Type": "application/json",
+        "x-access-token": token
+      },
+      body: JSON.stringify(newReviewData)
+    })
+    if (response.ok) {
+      setNewReviewData({
+        comment: "",
+        rating: 0
+      })
+      window.location.reload()
     }
-    loadImage();
-  }, [profileImage])
+  }
   return (
     <Container className="mb-4 style-resena">
       <Row>
         <Col sm={2} className="user-image-container">
           <Link to={toLink}>
-            <img src={imageSrc} alt="Foto de perfil" />
+            <img src={profileImage} alt="Foto de perfil" />
           </Link>
         </Col>
         <Col sm={10}>
@@ -35,16 +48,23 @@ const NewReview = ({ name, qualification, review, profileImage, isMovie, id }) =
             maxLength="240"
             placeholder="Escriba su comentario aquí..."
             required
+            onChange={e => setNewReviewData({
+              ...newReviewData,
+              comment: e.target.value
+            })}
           />
           <div className="start">
             <ReactStars
               count={5}
               size={24}
               edit={true}
-              value={qualification}
               activeColor="#ffd700"
+              onChange={stars => setNewReviewData({
+                ...newReviewData,
+                rating: stars
+              })}
             />
-            <Button type="submit" className="btnComment">Subir comentario</Button>
+            <Button onClick={handleSubmit} className="btnComment">Subir comentario</Button>
           </div>
         </Col>
       </Row>

@@ -32,7 +32,7 @@ const Home = () => {
     <div>
       <FloatingButton buttonText="Agregar pelicula" />
       <main>
-        {movies.length > 0 ? <CarouselMovie movies={movies} /> : null}
+        {movies.length > 0 ? <CarouselMovie movies={movies} /> : <LoadingIcon />}
       </main>
       {categories.length > 0 ? categories.map((category, index) => {
         const filteredMovies = movies.filter((movie) => {
@@ -44,7 +44,7 @@ const Home = () => {
             <CarouselCard movies={filteredMovies} />
           </section>
         ) : null
-      }) : <LoadingIcon />}
+      }) : null}
     </div>
   )
 }

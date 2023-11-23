@@ -12,42 +12,6 @@ import { useEffect, useState } from "react";
 import { backend_url } from "../../constants";
 import LoadingIcon from "../../components/loadingIcon/loadingIcon"
 
-const reviewsData = [
-  {
-    id: 1,
-    name: "Armagedon",
-    qualification: 4,
-    review:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat animi consectetur repellat, architecto optio accusamus temporibus ullam! Voluptatibus doloribus vel unde beatae incidunt, aspernatur fugit, laudantium, odio corporis eum sit.",
-    image: "http://t0.gstatic.com/images?q=tbn:ANd9GcRgrUV39BacPp1a1_JCLhhClLbR3tuyGADpaJoKkzH4BzLMgZyxgqRMd4UHg_DjmC0HaXGxGw",
-  },
-  {
-    id: 2,
-    name: "Nombre 2",
-    qualification: 5,
-    review:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat animi consectetur repellat, architecto optio accusamus temporibus ullam! Voluptatibus doloribus vel unde beatae incidunt, aspernatur fugit, laudantium, odio corporis eum sit.",
-    image: "http://t1.gstatic.com/images?q=tbn:ANd9GcRxJvyc-Eu5MOkSYsMbmRybS4DbiBa7cpoGuufWPw44K4mgeIjKNL2iJ7PFIoI_muWmiXvV",
-  },
-  {
-    id: 3,
-    name: "Jurasic Park",
-    qualification: 2,
-    review:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat animi consectetur repellat, architecto optio accusamus temporibus ullam! Voluptatibus doloribus vel unde beatae incidunt, aspernatur fugit, laudantium, odio corporis eum sit.",
-    image: "http://t1.gstatic.com/images?q=tbn:ANd9GcRxJvyc-Eu5MOkSYsMbmRybS4DbiBa7cpoGuufWPw44K4mgeIjKNL2iJ7PFIoI_muWmiXvV",
-  },
-];
-
-const generosPeliculas = ['Acción', 'Aventura', 'Biografía', 'Ciencia ficción', 'Crimen', 'Deporte', 'Documental', 'Drama', 'Fantasía', 'Familia', 'Guerra', 'Histórico', 'Misterio', 'Musical', 'Romance', 'Terror', 'Thriller'].sort();
-
-const nombre = "Jhon";
-const apellido = "Doe";
-const correo = "Jhon.Doe2023@gmail.com";
-const edad = 23;
-const fechaNacimiento = "2000-01-01";
-const genero = "Masculino";
-
 const Profile = () => {
   const { userId } = useParams()
   const { user, isAuthenticated } = useSelector(state => state.auth)
@@ -77,24 +41,6 @@ const Profile = () => {
     }
 
   }, [userId])
-
-  //Get user profile image
-  const [imageSrc, setImageSrc] = useState(null);
-  useEffect(() => {
-    const generateUserImage = async (name, lastname) => {
-      try {
-        const response = await fetch(`https://ui-avatars.com/api/?name=${name}+${lastname}&background=random&size=256`, {
-          method: 'GET',
-        })
-        const blob = await response.blob()
-        const url = URL.createObjectURL(blob)
-        setImageSrc(url)
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    if (profileData) generateUserImage(profileData.name, profileData.lastname)
-  }, [profileData])
 
   //Get reviews
   useEffect(() => {
@@ -155,7 +101,7 @@ const Profile = () => {
                   id="perfil-image"
                   className="imagen-perfil"
                   alt="Foto de perfil"
-                  src={imageSrc}
+                  src={`https://ui-avatars.com/api/?name=${profileData.name}+${profileData.lastname}&background=random&size=256`}
                 />
               </div>
               <div className="info-perfil">

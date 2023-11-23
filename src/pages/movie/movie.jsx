@@ -18,6 +18,7 @@ const newReview = {
 };
 
 const Movie = () => {
+    const { isAuthenticated } = useSelector(state=>state.auth)
     const navigate = useNavigate()
     const { id } = useParams()
     const [movie, setMovie] = useState()
@@ -53,17 +54,8 @@ const Movie = () => {
         }
         if (user) { getUserData() }
     }, [user])
-    const generateUserImage = async (name, lastname) => {
-        try {
-            const response = await fetch(`https://ui-avatars.com/api/?name=${name}+${lastname}&background=random&size=64`, {
-                method: 'GET',
-            })
-            const blob = await response.blob()
-            const url = URL.createObjectURL(blob)
-            return url
-        } catch (e) {
-            console.log(e);
-        }
+    const generateUserImage = (name, lastname) => {
+        return `https://ui-avatars.com/api/?name=${name}+${lastname}&background=random&size=64`
     }
     return (
         <>
@@ -110,13 +102,14 @@ const Movie = () => {
                         key={r.id}
                         id={r.user.id}
                     />)) : <LoadingIcon />}
-                    {userData ? (
+                    {userData && isAuthenticated ? (
                         <NewReview
                             name={`${userData.name} ${userData.lastname}`}
                             profileImage={generateUserImage(userData.name, userData.lastname)}
-                            id={userData.id}
+                            userId={userData.id}
+                            movieId={id}
                         />
-                    ) : <LoadingIcon />}
+                    ) : null}
                 </Container>
             ) : <LoadingIcon />}
         </>
