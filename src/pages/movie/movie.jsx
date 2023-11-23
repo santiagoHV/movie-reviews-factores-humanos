@@ -8,6 +8,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import LoadingIcon from "../../components/loadingIcon/loadingIcon"
 import { backend_url } from "../../constants";
 import poster from '../../assets/poster-placeholder.png'
+import { useSelector } from "react-redux";
 
 const newReview = {
     id: 4,
@@ -21,6 +22,8 @@ const Movie = () => {
     const { id } = useParams()
     const [movie, setMovie] = useState()
     const [imageSrc, setImageSrc] = useState('')
+    const user = useSelector(state => state.auth.user)
+    const [userData, setUserData] = useState()
     useEffect(() => {
         fetch(`${backend_url}/api/movies/${id}`, {
             method: 'GET'
@@ -34,16 +37,31 @@ const Movie = () => {
     const handleImageError = () => {
         setImageSrc(poster)
     }
-    const getUserId = async (email) => {
-        try {
-            const response = await fetch(`${backend_url}/api/users/getId/${email}`)
-            if (!response.ok) {
-                throw new Error(response.statusText)
+    useEffect(() => {
+        const getUserData = async () => {
+            try {
+                const response = await fetch(`${backend_url}/api/users/${user.id}`)
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                const data = await response.json()
+                setUserData(data)
             }
-            const data = await response.json()
-            return data.id
+            catch (e) {
+                console.log(e);
+            }
         }
-        catch (e) {
+        if (user) { getUserData() }
+    }, [user])
+    const generateUserImage = async (name, lastname) => {
+        try {
+            const response = await fetch(`https://ui-avatars.com/api/?name=${name}+${lastname}&background=random&size=64`, {
+                method: 'GET',
+            })
+            const blob = await response.blob()
+            const url = URL.createObjectURL(blob)
+            return url
+        } catch (e) {
             console.log(e);
         }
     }
@@ -84,19 +102,21 @@ const Movie = () => {
                             </div>
                         </Col>
                     </Row>
-                    {movie.reviews.map(r => <ReviewBox
+                    {movie.reviews ? (movie.reviews.map(r => <ReviewBox
                         name={`${r.user.name} ${r.user.lastname}`}
                         qualification={r.rating}
                         review={r.comment}
-                        profileImage={'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg'}
+                        profileImage={generateUserImage(r.user.name, r.user.lastname)}
                         key={r.id}
-                        id={getUserId(r.user.email)}
-                    />)}
-                    <NewReview
-                        name={newReview.name}
-                        profileImage={newReview.image}
-                        key={newReview.id}
-                    />
+                        id={r.user.id}
+                    />)) : <LoadingIcon />}
+                    {userData ? (
+                        <NewReview
+                            name={`${userData.name} ${userData.lastname}`}
+                            profileImage={generateUserImage(userData.name, userData.lastname)}
+                            id={userData.id}
+                        />
+                    ) : <LoadingIcon />}
                 </Container>
             ) : <LoadingIcon />}
         </>

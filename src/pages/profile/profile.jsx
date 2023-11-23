@@ -78,6 +78,24 @@ const Profile = () => {
 
   }, [userId])
 
+  //Get user profile image
+  const [imageSrc, setImageSrc] = useState(null);
+  useEffect(() => {
+    const generateUserImage = async (name, lastname) => {
+      try {
+        const response = await fetch(`https://ui-avatars.com/api/?name=${name}+${lastname}&background=random&size=256`, {
+          method: 'GET',
+        })
+        const blob = await response.blob()
+        const url = URL.createObjectURL(blob)
+        setImageSrc(url)
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    if (profileData) generateUserImage(profileData.name, profileData.lastname)
+  }, [profileData])
+
   //Get reviews
   useEffect(() => {
     const fetchReviews = async () => {
@@ -124,6 +142,8 @@ const Profile = () => {
     return age;
   }
 
+
+
   return (
     <>
       {profileData ? (
@@ -135,7 +155,7 @@ const Profile = () => {
                   id="perfil-image"
                   className="imagen-perfil"
                   alt="Foto de perfil"
-                  src="https://media.canalnet.tv/2018/08/Homero-Simpson.jpeg"
+                  src={imageSrc}
                 />
               </div>
               <div className="info-perfil">

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Card, Form, Button, FormCheck } from 'react-bootstrap'
+import ReCAPTCHA from "react-google-recaptcha"
 
 import { showAlert } from "../../reducers/notificationSlice"
 import { login } from "../../reducers/authSlice";
@@ -19,11 +20,13 @@ const Register = () => {
         email: "",
         password: "",
         birthdate: "",
-        contract: false
+        contract: false,
+        captcha: null
     })
 
     const handleRegister = (e) => {
         e.preventDefault()
+
         if (formData.name == "" | formData.lastname == "" | formData.email == "" | formData.birthdate == "") {
             const notification = {
                 style: 'danger',
@@ -67,6 +70,16 @@ const Register = () => {
             dispatch(showAlert(notification))
             return
         }
+
+        if (!formData.captcha) {
+            const notification = {
+                style: 'danger',
+                message: 'Complete el CAPTCHA para continuar'
+            }
+            dispatch(showAlert(notification))
+            return
+        }
+
         fetchUser(formData.name, formData.lastname, formData.email, formData.password, formData.birthdate)
             .then(user => {
                 const notification = {
@@ -103,7 +116,7 @@ const Register = () => {
             }
         }
         console.log(solicitud);
-        
+
         const response = await fetch(`${backend_url}/api/auth/signup`, {
             method: 'POST',
             body: solicitud.body
@@ -167,6 +180,10 @@ const Register = () => {
                     })} />
                     <FormCheck.Label>Acepto los {<Link to={"/policies"}>terminos y condiciones</Link>}</FormCheck.Label>
                 </Form.Check>
+                <ReCAPTCHA sitekey='6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI' onChange={event => setFormData({
+                    ...formData,
+                    captcha: event
+                })} />
                 <Button type="submit" className="btn btn-primary">Registrarse</Button>
             </Form>
         </Card>

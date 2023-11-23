@@ -11,24 +11,7 @@ import { backend_url } from '../../constants'
 const NavBar = () => {
     const navigate = useNavigate()
     const { user, isAuthenticated, isAdmin } = useSelector(state => state.auth)
-    const [userId, setUserId] = useState()
     const [searchTerms, setSearchTerms] = useState("")
-    useEffect(() => {
-        const fetchUserId = async (email) => {
-            try {
-                const response = await fetch(`${backend_url}/api/users/getId/${email}`)
-                if (!response.ok) {
-                    throw new Error(response.statusText)
-                }
-                const data = await response.json()
-                setUserId(data.id)
-            }
-            catch (e) {
-                console.log(e);
-            }
-        }
-        user ? user.email ? (fetchUserId(user.email)) : null : null
-    }, [user])
     const [expanded, setExpanded] = useState(false);
     const toggleNavbar = () => {
         setExpanded(!expanded);
@@ -61,7 +44,7 @@ const NavBar = () => {
                         <div id="navbar-main-content">
                             <Nav.Link as={Link} to="/">Inicio</Nav.Link>
                             {
-                                isAuthenticated && userId ? (<Nav.Link as={Link} to={`/profile/${userId}`}>Perfil</Nav.Link>) : ''
+                                isAuthenticated ? (<Nav.Link as={Link} to={`/profile/${user.id}`}>Perfil</Nav.Link>) : ''
                             }
                         </div>
                         <div id="navbar-alt-content">

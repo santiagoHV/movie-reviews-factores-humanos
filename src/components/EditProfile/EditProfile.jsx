@@ -34,10 +34,10 @@ function EditProfile({ nombre, apellido, fechaNacimiento, correo, id, token }) {
       birthdate: formValues.fechaNacimiento,
       email: formValues.correo
     }
-    const response = await fetch(`${backend_url}/api/user/update/${id}`, {
+    const response = await fetch(`${backend_url}/api/users/${id}`, {
       method: 'PUT',
       headers: {
-        'x-access-token': token
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(data)
     })
@@ -47,6 +47,7 @@ function EditProfile({ nombre, apellido, fechaNacimiento, correo, id, token }) {
         style: 'success',
         message: 'Información actualizada'
       }
+      window.location.reload()
     } else {
       alert = {
         style: 'danger',
