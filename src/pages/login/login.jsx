@@ -10,6 +10,12 @@ const Login = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handlePasswordToggle = () => {
+        setShowPassword(!showPassword);
+    };
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -24,7 +30,7 @@ const Login = () => {
                 }
                 const payload = {
                     user: user,
-                    admin: user.role==='admin'?true:false,
+                    admin: user.role === 'admin' ? true : false,
                 }
                 dispatch(login(payload))
                 navigate("/")
@@ -60,7 +66,7 @@ const Login = () => {
     }
 
     return (
-        <Card style={{ maxWidth: '400px', margin: '50px auto', padding: '50px'}}>
+        <Card style={{ maxWidth: '400px', margin: '50px auto', padding: '50px' }}>
             <Card.Title style={{ marginBottom: '20px' }}>Iniciar Sesion</Card.Title>
             <Form>
                 <Form.Group className="mb-3">
@@ -72,11 +78,19 @@ const Login = () => {
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label className="form-label" htmlFor="login-password">Contraseña</Form.Label>
-                    <Form.Control type="password" className="form-control" id="login-password" autoComplete="current-password" onChange={event => setFormData({
+                    <Form.Control type={showPassword ? 'text' : 'password'} className="form-control" id="login-password" autoComplete="current-password" onChange={event => setFormData({
                         ...formData,
                         password: event.target.value
                     })} />
+                    <Button
+                        variant="outline-secondary"
+                        onClick={handlePasswordToggle}
+                        className="mt-2"
+                    >
+                        {showPassword ? 'Ocultar' : 'Mostrar'}
+                    </Button>
                 </Form.Group>
+
                 <Button type="button" className="btn btn-primary" onClick={handleLogin}>Iniciar Sesion</Button>
             </Form>
             <Form.Text muted>

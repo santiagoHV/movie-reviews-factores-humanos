@@ -24,6 +24,12 @@ const Register = () => {
         captcha: null
     })
 
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handlePasswordToggle = () => {
+        setShowPassword(!showPassword);
+    };
+
     const handleRegister = (e) => {
         e.preventDefault()
 
@@ -112,7 +118,7 @@ const Register = () => {
         }
         const response = await fetch(`${backend_url}/api/auth/signup`, {
             method: 'POST',
-            headers:{
+            headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(solicitud.body)
@@ -154,10 +160,18 @@ const Register = () => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Label className="form-label" htmlFor="register-email">Contraseña</Form.Label>
-                    <Form.Control type="password" className="form-control" id="register-password" autoComplete="password" required onChange={event => setFormData({
+                    <Form.Control type={showPassword ? 'text' : 'password'} className="form-control" id="register-password" autoComplete="password" required onChange={event => setFormData({
                         ...formData,
                         password: event.target.value
                     })} />
+                    <Button
+                        variant="outline-secondary"
+                        onClick={handlePasswordToggle}
+                        className="mt-2"
+                    >
+                        {showPassword ? 'Ocultar' : 'Mostrar'}
+                    </Button>
+                    <br />
                     <Form.Text id="passwordHelpBlock" muted>
                         La contraseña debe tener por lo menos 8 carácters y contener por lo menos una mayúscula, una minúscula, un digito y un carácter especial
                     </Form.Text>
@@ -169,6 +183,7 @@ const Register = () => {
                         birthdate: event.target.value
                     })} />
                 </Form.Group>
+                <br />
                 <Form.Check>
                     <FormCheck.Input type={'checkbox'} required onChange={event => setFormData({
                         ...formData,
@@ -176,12 +191,16 @@ const Register = () => {
                     })} />
                     <FormCheck.Label>Acepto los {<Link to={"/policies"}>terminos y condiciones</Link>}</FormCheck.Label>
                 </Form.Check>
+                <br />
                 <ReCAPTCHA sitekey='6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI' onChange={event => setFormData({
                     ...formData,
                     captcha: event
                 })} />
+                <br />
                 <Button type="submit" className="btn btn-primary">Registrarse</Button>
             </Form>
+            <br/>
+            <span>¿Ya tiene una cuenta? <Link to={"/login"}>Inicie sesión</Link></span>
         </Card>
     )
 }

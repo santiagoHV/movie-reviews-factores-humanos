@@ -1,5 +1,6 @@
 import { Card } from "react-bootstrap"
 import './policies.css'
+import { Link } from "react-router-dom"
 
 const TermsAndConditions = () => {
     return (
@@ -41,6 +42,7 @@ const TermsAndConditions = () => {
                             Este contrato entrará en vigencia desde la fecha de aceptación y continuará mientras tengamos tu información en nuestro poder. Puedes rescindir este contrato en cualquier momento mediante notificación por escrito.
                         </Card.Text>
                     </section>
+                    <Link to={"/register"}>Volver al registro</Link>
                 </Card.Body>
             </Card>
         </>
