@@ -159,12 +159,14 @@ const Profile = () => {
               <Tab eventKey="preferencias" title="Preferencias">
                 <Form>
                   {categories ? categories.map((category, index) => (
-                    <Form.Check
-                      key={index}
-                      type="checkbox"
-                      label={category.name}
-                      id={`genero-${index}`}
-                    />
+                    category.name && (
+                      <Form.Check
+                        key={index}
+                        type="checkbox"
+                        label={category.name}
+                        id={`genero-${index}`}
+                      />
+                    )
                   )) : <LoadingIcon />}
                 </Form>
                 <Button className="btn-actualizar" variant="primary">Actualizar</Button>{' '}

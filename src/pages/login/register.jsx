@@ -84,14 +84,9 @@ const Register = () => {
             .then(user => {
                 const notification = {
                     style: 'success',
-                    message: 'Se ha iniciado sesion'
+                    message: 'Se ha registrado correctamente'
                 }
-                const payload = {
-                    user: user,
-                    admin: false,
-                }
-                dispatch(login(payload))
-                navigate("/")
+                navigate("/login")
                 dispatch(showAlert(notification))
                 dispatch(showAlert(notification))
             }).catch(error => {
@@ -115,11 +110,12 @@ const Register = () => {
                 "role": "user"
             }
         }
-        console.log(solicitud);
-
         const response = await fetch(`${backend_url}/api/auth/signup`, {
             method: 'POST',
-            body: solicitud.body
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(solicitud.body)
         })
         if (response.status === 200) {
             const data = await response.json()
