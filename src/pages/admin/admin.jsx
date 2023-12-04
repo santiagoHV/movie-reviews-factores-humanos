@@ -32,6 +32,7 @@ const Admin = () => {
                 const formatedMovies = unpublishedMovies.map((movie) => {
                     return {
                         name: movie.title,
+                        status: movie.status,
                         url: `/admin/movie/${movie.id}`
                     }
                 })
@@ -39,15 +40,18 @@ const Admin = () => {
             })
     }, [token])
 
-    return (
+    if (movies) return (
         <>
-            {movies ? (
-                <section>
-                    <h2>Peliculas por aprobar</h2>
-                    <ListDisplayer elements={movies} />
-                </section>
-            ) : <LoadingIcon />}
+            <section>
+                <h2>Peliculas por aprobar</h2>
+                <ListDisplayer elements={movies.filter(movie => movie.status == 'pending')} />
+            </section>
+            <section>
+                <h2>Peliculas rechazadas</h2>
+                <ListDisplayer elements={movies.filter(movie => movie.status == 'rejected')} />
+            </section>
         </>
     )
+    return <LoadingIcon />
 }
 export default Admin
