@@ -1,18 +1,19 @@
 import { Container, Row, Tabs, Tab, Form, Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ReviewBox from "../../components/ReviewBox/ReviewBox";
 import EditProfile from "../../components/EditProfile/EditProfile";
 import correoIcon from "../../assets/icons/correo.png";
 import edadIcon from "../../assets/icons/edad.png";
 import fechaNacimientoIcon from "../../assets/icons/fecha-nacimiento.png";
-import generoIcon from "../../assets/icons/genero.png";
 import "./profile.css";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { backend_url } from "../../constants";
 import LoadingIcon from "../../components/loadingIcon/loadingIcon"
+import {showAlert} from '../../reducers/notificationSlice'
 
 const Profile = () => {
+  const dispatch = useDispatch()
   const { userId } = useParams()
   const { user, isAuthenticated } = useSelector(state => state.auth)
   const [profileData, setProfileData] = useState()
@@ -34,6 +35,7 @@ const Profile = () => {
           }
         })
         .then((data) => {
+          data.categories = data.categories.map(category=>`${category.id}`)
           setProfileData(data)
         })
     } catch (e) {
@@ -46,7 +48,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch(`${backend_url}/api/users/reviews/${profileData.id}`, {
+        const response = await fetch(`${backend_url}/api/users/reviews/${userId}`, {
           method: 'GET',
           headers: {
             'x-access-token': user.token
@@ -61,8 +63,8 @@ const Profile = () => {
         console.log(e);
       }
     }
-    if (profileData) fetchReviews()
-  }, [profileData, user])
+    if (userId) fetchReviews()
+  }, [userId, user])
 
   //Get categories
   useEffect(() => {
@@ -88,7 +90,39 @@ const Profile = () => {
     return age;
   }
 
+  //Handdle preference change
+  const handleCategoryChange = (event) => {
+    const { name, checked } = event.target
+    let updated_categories = profileData.categories
+    if (checked && !profileData.categories.includes(name)) {
+      updated_categories = [...updated_categories, name]
+    } else if (!checked && profileData.categories.includes(name)) {
+      updated_categories = updated_categories.filter((category) => category !== name)
+    }
+    setProfileData({
+      ...profileData,
+      categories: updated_categories
+    })
+  }
 
+  //Update preferences
+  const updatePreferences = async() => {
+    console.log("enviando")
+    const response = await fetch(`${backend_url}/api/users/preferences`,{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'x-access-token': user.token
+      },
+      body: JSON.stringify({"preferences": profileData.categories})
+    })
+    if (response.ok){
+      dispatch(showAlert({style: 'success', message: 'Preferencias actualizadas'}))
+    }
+    else{
+      dispatch(showAlert({style: 'danger', message: 'Error al actualizar preferencias'}))
+    }
+  }
 
   return (
     <>
@@ -165,11 +199,14 @@ const Profile = () => {
                         type="checkbox"
                         label={category.name}
                         id={`genero-${index}`}
+                        checked={profileData.categories.includes(`${category.id}`)}
+                        name={category.id}
+                        onChange={handleCategoryChange}
                       />
                     )
                   )) : <LoadingIcon />}
                 </Form>
-                <Button className="btn-actualizar" variant="primary">Actualizar</Button>{' '}
+                <Button className="btn-actualizar" variant="primary" onClick={updatePreferences}>Actualizar</Button>{' '}
               </Tab>
             ) : null}
 
