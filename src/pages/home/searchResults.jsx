@@ -7,7 +7,7 @@ import LoadingIcon from "../../components/loadingIcon/loadingIcon"
 const SearchResults = () => {
     const location = useLocation()
     const searchTerms = new URLSearchParams(location.search).get('terms');
-    const [results, setResults] = useState([])
+    const [results, setResults] = useState()
     useEffect(() => {
         const fetchResults = async (searchTerms) => {
             const response = await fetch(`${backend_url}/api/movies?search=${searchTerms}`)
@@ -21,7 +21,7 @@ const SearchResults = () => {
     }, [searchTerms])
     return (
         <>
-            {results.length > 0 ? (
+            {results ? (
                 <section>
                     <h2 >Resultados para: {searchTerms}</h2>
                     <CarouselCard movies={results} />

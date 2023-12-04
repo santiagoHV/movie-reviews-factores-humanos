@@ -8,24 +8,23 @@ import LoadingIcon from "../../components/loadingIcon/loadingIcon"
 import poster from '../../assets/poster-placeholder.png'
 
 const AproveMovie = () => {
-
     const navigate = useNavigate()
 
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-    const isAdmin = useSelector(state => state.auth.isAdmin)
-    if (!isAuthenticated | !isAdmin) {
-        navigate("/")
-    }
-
-    const token = useSelector(state => state.auth.user.token)
+    const { isAuthenticated, isAdmin, user } = useSelector(state => state.auth)
+    const token = user.token
     const { id } = useParams()
     const [movie, setMovie] = useState()
     const [imageSrc, setImageSrc] = useState('')
 
+    if (!isAuthenticated | !isAdmin) {
+        navigate("/")
+    }
+
     useEffect(() => {
         fetch(`${backend_url}/api/movies/${id}`, {
             method: 'GET'
-        }).then((response) => response.json())
+        })
+            .then((response) => response.json())
             .then((data) => {
                 data.published ? navigate("/admin") : setMovie(data)
                 setImageSrc(data.image)
@@ -62,20 +61,15 @@ const AproveMovie = () => {
                     <h2>{movie.title}</h2>
                     <img src={imageSrc} alt={movie.title} width={300} onError={handleImageError} />
                     <section>
-                        <strong>Director:</strong> {movie.director}
-                    </section>
-                    <section>
-                        <strong>Descripción:</strong> {movie.description}
-                    </section>
-                    <section>
-                        <strong>Año:</strong> {movie.year}
-                    </section>
-                    <section>
-                        <strong>Genero:</strong> {movie.categories.map(category => category.name).join(', ')}
+                        <strong>Director:</strong> {movie.director}<br/>
+                        <strong>Descripción:</strong> {movie.description}<br/>
+                        <strong>Año:</strong> {movie.year}<br/>
+                        <strong>Genero:</strong> {movie.categories.map(category => category.name).join(', ')}<br/>
+                        <strong>Clasificación:</strong> {movie.clasification}<br/>
                     </section>
                     <Button variant="primary" onClick={() => { publishMovie(true) }}>Aprobar</Button>
                     <Button variant="danger" onClick={() => { publishMovie(false) }}>Rechazar</Button>
-                    <Button variant="secondary" onClick={()=>{navigate("/admin")}}>Cancelar</Button>
+                    <Button variant="secondary" onClick={() => { navigate(`/admin/edit/movie/${id}`) }}>Editar</Button>
                 </main>
             ) : <LoadingIcon />}
         </>

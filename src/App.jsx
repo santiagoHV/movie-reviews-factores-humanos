@@ -14,6 +14,7 @@ import TermsAndConditions from './pages/policies/TermsAndConditions'
 import { Route, Routes } from 'react-router-dom'
 import AproveMovie from './pages/admin/aproveMovie'
 import SearchResults from './pages/home/searchResults'
+import EditMovie from './pages/admin/editMovie'
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/policies' element={<TermsAndConditions />} />
         <Route path='/admin/movie/:id' element={<AproveMovie />} />
+        <Route path='/admin/edit/movie/:id' element={<EditMovie />} />
         <Route path='/search' element={ <SearchResults /> } />
       </Routes>
     </>

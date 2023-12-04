@@ -1,30 +1,25 @@
 import { useEffect, useState } from "react";
 import "./movie.css";
 import ReactStars from "react-rating-stars-component";
-import { Col, Row, Container } from "react-bootstrap";
+import { Col, Row, Container, Button } from "react-bootstrap";
 import ReviewBox from "../../components/ReviewBox/ReviewBox";
 import NewReview from "../../components/NewReview/NewReview";
 import { useParams, useNavigate } from "react-router-dom";
 import LoadingIcon from "../../components/loadingIcon/loadingIcon"
 import { backend_url } from "../../constants";
 import poster from '../../assets/poster-placeholder.png'
-import { useSelector } from "react-redux";
-
-const newReview = {
-    id: 4,
-    name: "Alma Marcela Gozo",
-    image:
-        "https://th.bing.com/th/id/OIP.3qpmiW3xheSmoUrlOzpWtQHaHa?pid=ImgDet&w=1600&h=1600&rs=1",
-};
+import { useSelector, useDispatch } from "react-redux";
+import { showAlert } from "../../reducers/notificationSlice"
 
 const Movie = () => {
-    const { isAuthenticated } = useSelector(state=>state.auth)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { isAuthenticated, isAdmin, user } = useSelector(state=>state.auth)
     const { id } = useParams()
     const [movie, setMovie] = useState()
     const [imageSrc, setImageSrc] = useState('')
-    const user = useSelector(state => state.auth.user)
     const [userData, setUserData] = useState()
+
     useEffect(() => {
         fetch(`${backend_url}/api/movies/${id}`, {
             method: 'GET'
@@ -35,9 +30,7 @@ const Movie = () => {
                 setImageSrc(data.image)
             })
     }, [id, navigate])
-    const handleImageError = () => {
-        setImageSrc(poster)
-    }
+
     useEffect(() => {
         const getUserData = async () => {
             try {
@@ -54,9 +47,31 @@ const Movie = () => {
         }
         if (user) { getUserData() }
     }, [user])
+
     const generateUserImage = (name, lastname) => {
         return `https://ui-avatars.com/api/?name=${name}+${lastname}&background=random&size=64`
     }
+
+    
+    const handleImageError = () => {
+        setImageSrc(poster)
+    }
+
+    const hideMovie = async() => {
+        await fetch(`${backend_url}/api/movies/${id}`, {
+            method: 'PUT',
+            headers:{
+                'Content-Type': 'application/json',
+                'x-access-token': user.token
+            }
+        })
+        dispatch(showAlert({
+            style: "warning",
+            message: "Pelicula ocultada"
+        }))
+        navigate("/")
+    }
+
     return (
         <>
             {movie ? (
@@ -92,6 +107,7 @@ const Movie = () => {
                                     <li tabIndex={5}>Género: {movie.categories.map(category => category.name).join(', ')}</li>
                                 </ul>
                             </div>
+                            {isAdmin?<Button variant="danger" onClick={hideMovie}>Ocultar pelicula</Button>:null}
                         </Col>
                     </Row>
                     {movie.reviews ? (movie.reviews.map(r => <ReviewBox
