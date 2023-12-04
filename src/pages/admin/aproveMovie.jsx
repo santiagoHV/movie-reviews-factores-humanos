@@ -32,13 +32,23 @@ const AproveMovie = () => {
             })
     }, [id, navigate])
 
-    const publishMovie = () => {
-        fetch(`${backend_url}/api/movies/admin/publish/${id}`, {
-            method: 'PUT',
-            headers: {
-                'x-access-token': token
-            }
-        })
+    const publishMovie = async (aproved) => {
+        if (aproved) {
+            await fetch(`${backend_url}/api/movies/admin/publish/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'x-access-token': token
+                }
+            })
+        } else {
+            await fetch(`${backend_url}/api/movies/admin/reject/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'x-access-token': token
+                }
+            })
+        }
+        navigate("/admin")
     }
 
     const handleImageError = () => {
@@ -50,7 +60,7 @@ const AproveMovie = () => {
             {movie ? (
                 <main style={{ margin: "50px 4%" }}>
                     <h2>{movie.title}</h2>
-                    <img src={imageSrc} alt={movie.title} width={300} onError={handleImageError}/>
+                    <img src={imageSrc} alt={movie.title} width={300} onError={handleImageError} />
                     <section>
                         <strong>Director:</strong> {movie.director}
                     </section>
@@ -63,10 +73,9 @@ const AproveMovie = () => {
                     <section>
                         <strong>Genero:</strong> {movie.categories.map(category => category.name).join(', ')}
                     </section>
-                    <Button onClick={() => {
-                        publishMovie()
-                        navigate("/admin")
-                    }}>Aprobar</Button>
+                    <Button variant="primary" onClick={() => { publishMovie(true) }}>Aprobar</Button>
+                    <Button variant="danger" onClick={() => { publishMovie(false) }}>Rechazar</Button>
+                    <Button variant="secondary" onClick={()=>{navigate("/admin")}}>Cancelar</Button>
                 </main>
             ) : <LoadingIcon />}
         </>
