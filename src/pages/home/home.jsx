@@ -3,12 +3,14 @@ import CarouselCard from "../../components/CarouselCard/CarouselCard";
 import FloatingButton from "../../components/FloatingButton/FloatingButton";
 import LoadingIcon from "../../components/loadingIcon/loadingIcon"
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { backend_url } from '../../constants'
-
 import './home.css'
 
 
 const Home = () => {
+  const { isAuthenticated } = useSelector(state=>state.auth)
+
   const [categories, setCategories] = useState([])
   const [movies, setMovies] = useState([])
 
@@ -30,7 +32,7 @@ const Home = () => {
 
   return (
     <div>
-      <FloatingButton buttonText="Agregar pelicula" />
+      {isAuthenticated? <FloatingButton buttonText="Agregar pelicula" />:null}
       <main>
         {movies.length > 0 ? <CarouselMovie movies={movies} /> : <LoadingIcon />}
       </main>
