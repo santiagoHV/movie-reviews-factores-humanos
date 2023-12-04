@@ -91,7 +91,7 @@ const NewMovie = () => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Label className="form-label" htmlFor="nm-description">Descripción / Sinopsis</Form.Label>
-                    <Form.Control as="textarea" maxLength={240} name='description' onChange={handleChange} required />
+                    <Form.Control as="textarea" maxLength={300} name='description' onChange={handleChange} required />
                 </Form.Group>
                 <Form.Group>
                     <Form.Label className="form-label" htmlFor="nm-year">Año de lanzamiento</Form.Label>
