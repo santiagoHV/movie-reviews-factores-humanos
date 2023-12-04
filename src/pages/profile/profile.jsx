@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { backend_url } from "../../constants";
 import LoadingIcon from "../../components/loadingIcon/loadingIcon"
-import {showAlert} from '../../reducers/notificationSlice'
+import { showAlert } from '../../reducers/notificationSlice'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -18,6 +18,7 @@ const Profile = () => {
   const { user, isAuthenticated } = useSelector(state => state.auth)
   const [profileData, setProfileData] = useState()
   const [reviewsData, setReviewsData] = useState()
+  const [moviesData, setMoviesData] = useState()
   const [categories, setCategories] = useState()
 
   //Get user data
@@ -35,7 +36,7 @@ const Profile = () => {
           }
         })
         .then((data) => {
-          data.categories = data.categories.map(category=>`${category.id}`)
+          data.categories = data.categories.map(category => `${category.id}`)
           setProfileData(data)
         })
     } catch (e) {
@@ -58,7 +59,7 @@ const Profile = () => {
           throw new Error(response.statusText)
         }
         const data = await response.json()
-        setReviewsData(data)
+        setReviewsData(data.review)
       } catch (e) {
         console.log(e);
       }
@@ -75,6 +76,25 @@ const Profile = () => {
       .then((data) => setCategories(data))
   }, [setCategories])
 
+  //Get movies
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const response = await fetch(`${backend_url}/api/movies/user/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': user.token
+        }
+      })
+      if (response.ok) {
+        const data = await response.json()
+        setMoviesData(data)
+      }
+    }
+    if (userId == user.id) fetchMovies()
+  }, [user, userId])
+
+  //Calcular edad
   const getAge = (birhdate) => {
     const currentDate = new Date();
     const birthdateDate = new Date(birhdate);
@@ -106,21 +126,21 @@ const Profile = () => {
   }
 
   //Update preferences
-  const updatePreferences = async() => {
+  const updatePreferences = async () => {
     console.log("enviando")
-    const response = await fetch(`${backend_url}/api/users/preferences`,{
+    const response = await fetch(`${backend_url}/api/users/preferences`, {
       method: 'POST',
-      headers:{
+      headers: {
         'Content-Type': 'application/json',
         'x-access-token': user.token
       },
-      body: JSON.stringify({"preferences": profileData.categories})
+      body: JSON.stringify({ "preferences": profileData.categories })
     })
-    if (response.ok){
-      dispatch(showAlert({style: 'success', message: 'Preferencias actualizadas'}))
+    if (response.ok) {
+      dispatch(showAlert({ style: 'success', message: 'Preferencias actualizadas' }))
     }
-    else{
-      dispatch(showAlert({style: 'danger', message: 'Error al actualizar preferencias'}))
+    else {
+      dispatch(showAlert({ style: 'danger', message: 'Error al actualizar preferencias' }))
     }
   }
 
@@ -178,12 +198,12 @@ const Profile = () => {
           >
 
             <Tab eventKey="misReseñas" title="Mis Reseñas">
-              {reviewsData ? reviewsData.map(r => <ReviewBox
-                name={r.name}
-                qualification={r.qualification}
-                review={r.review}
-                profileImage={r.image}
-                key={r.id}
+              {reviewsData ? reviewsData.map((r, index) => <ReviewBox
+                name={`${profileData.name} ${profileData.lastname}`}
+                qualification={r.rating}
+                review={r.comment}
+                image={`https://ui-avatars.com/api/?name=${profileData.name}+${profileData.lastname}&background=random&size=256`}
+                key={index}
                 isMovie={true}
                 id={r.id}
               />) : <LoadingIcon />}
@@ -209,7 +229,50 @@ const Profile = () => {
                 <Button className="btn-actualizar" variant="primary" onClick={updatePreferences}>Actualizar</Button>{' '}
               </Tab>
             ) : null}
-
+            {isAuthenticated && user.email === profileData.email ? (
+              <Tab eventKey="peliculas" title="Peliculas">
+                {moviesData ? (
+                  <>
+                    <section>
+                      <h2>Publicadas</h2>
+                      {moviesData.filter(movie=>movie.status=='approved').map((movie)=><ReviewBox
+                        key={movie.id}
+                        isMovie={true}
+                        name={movie.title}
+                        qualification={movie.rating}
+                        id={movie.id}
+                        image={movie.image}
+                        review={movie.description}
+                      />)}
+                    </section>
+                    <section>
+                      <h2>Pendientes</h2>
+                      {moviesData.filter(movie=>movie.status=='pending').map((movie)=><ReviewBox
+                        key={movie.id}
+                        isMovie={true}
+                        name={movie.title}
+                        qualification={movie.rating}
+                        id={movie.id}
+                        image={movie.image}
+                        review={movie.description}
+                      />)}
+                    </section>
+                    <section>
+                      <h2>Rechazadas</h2>
+                      {moviesData.filter(movie=>movie.status=='rejected').map((movie)=><ReviewBox
+                        key={movie.id}
+                        isMovie={true}
+                        name={movie.title}
+                        qualification={movie.rating}
+                        id={movie.id}
+                        image={movie.image}
+                        review={movie.description}
+                      />)}
+                    </section>
+                  </>
+                ) : null}
+              </Tab>
+            ) : null}
           </Tabs>
 
         </Container>
