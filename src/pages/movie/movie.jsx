@@ -114,7 +114,7 @@ const Movie = () => {
                         name={`${r.user.name} ${r.user.lastname}`}
                         qualification={r.rating}
                         review={r.comment}
-                        profileImage={generateUserImage(r.user.name, r.user.lastname)}
+                        image={generateUserImage(r.user.name, r.user.lastname)}
                         key={r.id}
                         id={r.user.id}
                     />)) : <LoadingIcon />}

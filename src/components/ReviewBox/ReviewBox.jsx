@@ -3,7 +3,7 @@ import './ReviewBox.css';
 import { Col, Container, Row } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
 
-const ReviewBox = ({ name, qualification, review, profileImage, isMovie, id }) => {
+const ReviewBox = ({ name, qualification, review, image, isMovie, id }) => {
     const toLink = isMovie ? `/movie/${id}` : `/profile/${id}`;
     return (
         <Container className="mb-4 style-resena">
@@ -11,7 +11,7 @@ const ReviewBox = ({ name, qualification, review, profileImage, isMovie, id }) =
                 <Col sm={2} className="user-image-container">
                     <Link to={toLink}>
                         <img
-                            src={profileImage}
+                            src={image}
                             alt="Foto de perfil"
                         />
                     </Link>
