@@ -122,12 +122,12 @@ const EditMovie = () => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Clasificación</Form.Label>
-                    <Form.Select name='clasification' onChange={handleChange} required>
+                    <Form.Select name='clasification' onChange={handleChange} required value={movieData.clasification||'G'}>
                         <option value='G'>G - Todas las edades</option>
                         <option value='PG'>PG - Se sugiere la compañía de un adulto</option>
                         <option value='PG-13'>PG-13 - No apto para menores de 13 años</option>
                         <option value='R'>R - Contiene material para adultos</option>
-                        <option value='NC-17'>NC-17 - Solo adultos</option>
+                        <option value='NC-17' selected>NC-17 - Solo adultos</option>
                     </Form.Select>
                 </Form.Group>
                 <Form.Group>
