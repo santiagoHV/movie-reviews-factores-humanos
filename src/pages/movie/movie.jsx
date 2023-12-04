@@ -96,7 +96,7 @@ const Movie = () => {
                                 count={5}
                                 size={40}
                                 edit={false}
-                                value={movie.qualification}
+                                value={movie.rating}
                                 activeColor="#ffd700"
                             />
                             <p tabIndex={2}>{movie.description}</p>
