@@ -40,6 +40,8 @@ p {
 
 .info-personal {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .double-items {
