@@ -9,6 +9,11 @@
   height: 100%;
 }
 
+.conteiner-img-perfil img {
+  height: 128px;
+  width: 128px;
+}
+
 .conteiner-perfil {
   display: flex;
   margin-top: 3rem;
