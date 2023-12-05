@@ -1,10 +1,9 @@
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
+import { Form } from "react-bootstrap"
 import ListDisplayer from "../../components/ListDisplayer/ListDisplayer"
-
 import { backend_url } from '../../constants'
-import { useState } from "react"
 import LoadingIcon from "../../components/loadingIcon/loadingIcon"
 
 
@@ -19,6 +18,7 @@ const Admin = () => {
     }
     const token = useSelector(state => state.auth.user.token)
     const [movies, setMovies] = useState()
+    const [search, setSearch] = useState("")
 
     useEffect(() => {
         fetch(`${backend_url}/api/movies/admin/unpublished`, {
@@ -43,8 +43,18 @@ const Admin = () => {
     if (movies) return (
         <>
             <section>
+                <Form>
+                    <Form.Group>
+                        <Form.Label>Buscar</Form.Label>
+                        <Form.Control onChange={(e) => setSearch(e.target.value)} />
+                    </Form.Group>
+                </Form>
+            </section>
+            <section>
                 <h2>Peliculas por aprobar</h2>
-                <ListDisplayer elements={movies.filter(movie => movie.status == 'pending')} />
+                <ListDisplayer elements={movies.filter(movie => {
+                    return movie.status == 'pending' && movie.name.toLowerCase().includes(search.toLowerCase())
+                })} />
             </section>
             <section>
                 <h2>Peliculas rechazadas</h2>
