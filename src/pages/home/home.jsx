@@ -43,7 +43,7 @@ const Home = () => {
         return filteredMovies.length > 0 ? (
           <section key={index}>
             <h2 >{category.name}</h2>
-            <CarouselCard movies={filteredMovies} />
+            <CarouselCard movies={filteredMovies.sort((a,b)=>b.rating-a.rating)} />
           </section>
         ) : null
       }) : null}
