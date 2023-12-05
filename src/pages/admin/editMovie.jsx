@@ -30,6 +30,8 @@ const EditMovie = () => {
             .then((response) => response.json())
             .then((data) => {
                 data.categories = data.categories.map(category => `${category.MovieCategory.categoryId}`)
+                if (!data.clasification) data.clasification = 'G'
+                console.log(data)
                 setMovieData(data)
             })
     }, [id, navigate])
