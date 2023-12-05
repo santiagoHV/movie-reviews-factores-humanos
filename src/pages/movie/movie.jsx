@@ -105,6 +105,7 @@ const Movie = () => {
                                     <li tabIndex={3}>Director: {movie.director}</li>
                                     <li tabIndex={4}>Año: {movie.year}</li>
                                     <li tabIndex={5}>Género: {movie.categories.map(category => category.name).join(', ')}</li>
+                                    <li tabIndex={6}>Clasifficación: {movie.clasification}</li>
                                 </ul>
                             </div>
                             {isAdmin?<Button variant="danger" onClick={hideMovie}>Ocultar pelicula</Button>:null}
