@@ -7,21 +7,15 @@ import './CarouselCard.css';
 const CarouselCard = ({ movies }) => {
 
   const [windowSize, setWindowSize] = useState(getWindowSize());
-
   function getWindowSize() {
     return window.innerWidth;
   }
 
-
-
   useEffect(() => {
-
     function handleResize() {
       setWindowSize(getWindowSize());
     }
-
     window.addEventListener('resize', handleResize);
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -41,6 +35,7 @@ const CarouselCard = ({ movies }) => {
     groups.push(movies.slice(index, index + size))
     index += size
   }
+
   return (
     <Carousel indicators={false} interval={null} className="cardCarousel">
       {
