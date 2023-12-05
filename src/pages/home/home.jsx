@@ -36,6 +36,10 @@ const Home = () => {
       <main>
         {movies.length > 0 ? <CarouselMovie movies={movies.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).slice(0, 15)} /> : <LoadingIcon />}
       </main>
+      <section>
+        <h2>Top 10</h2>
+        {movies.length > 0 ?<CarouselCard movies={movies.sort((a,b)=>b.rating-a.rating).slice(0,10)}/>: <LoadingIcon/>}
+      </section>
       {categories.length > 0 ? categories.map((category, index) => {
         const filteredMovies = movies.filter((movie) => {
           return movie.categories.some((cat) => cat.name === category.name)
