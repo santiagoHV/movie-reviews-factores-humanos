@@ -4,6 +4,7 @@ import { Form } from "react-bootstrap"
 import { backend_url } from '../../constants'
 import CarouselCard from "../../components/CarouselCard/CarouselCard";
 import LoadingIcon from "../../components/loadingIcon/loadingIcon"
+import GridCard from "../../components/GridCard/GridCard";
 
 const SearchResults = () => {
     const location = useLocation()
@@ -70,7 +71,7 @@ const SearchResults = () => {
                 </Form>
             </section>
             <section>
-                <CarouselCard movies={orderedResults} />
+                <GridCard movies={orderedResults} />
             </section>
         </>
     )

@@ -1,0 +1,10 @@
+.grid-card-display{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.grid-card-display .cardMovie{
+    margin: 20px;
+}
