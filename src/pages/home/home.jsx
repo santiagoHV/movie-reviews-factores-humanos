@@ -34,7 +34,7 @@ const Home = () => {
     <div>
       {isAuthenticated? <FloatingButton buttonText="Agregar pelicula" />:null}
       <main>
-        {movies.length > 0 ? <CarouselMovie movies={movies} /> : <LoadingIcon />}
+        {movies.length > 0 ? <CarouselMovie movies={movies.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).slice(0, 15)} /> : <LoadingIcon />}
       </main>
       {categories.length > 0 ? categories.map((category, index) => {
         const filteredMovies = movies.filter((movie) => {
