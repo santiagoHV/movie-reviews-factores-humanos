@@ -5,7 +5,8 @@ import './CarouselMovie.css'
 
 function CarouselMovie({ movies }) {
   return (
-    <div>
+    <div className={'homeCarousel'}>
+      <h1>Ultimas añadidas</h1>
       <Carousel className='bannerDisplay'>
         {movies.map((movie, index) => (
           <Carousel.Item key={index}>
