@@ -11,6 +11,7 @@ const Login = () => {
     const dispatch = useDispatch()
 
     const [showPassword, setShowPassword] = useState(false);
+    const [fetching, setFetching] = useState(false)
 
     const handlePasswordToggle = () => {
         setShowPassword(!showPassword);
@@ -22,6 +23,7 @@ const Login = () => {
     })
 
     const handleLogin = () => {
+        setFetching(true)
         fetchUser(formData.email, formData.password, formData.admin)
             .then(user => {
                 const notification = {
@@ -41,7 +43,7 @@ const Login = () => {
                     message: String(error)
                 }
                 dispatch(showAlert(notification))
-            })
+            }).finally(()=>setFetching(false))
     }
 
     const fetchUser = async (email, password) => {
@@ -91,7 +93,7 @@ const Login = () => {
                     </Button>
                 </Form.Group>
 
-                <Button type="button" className="btn btn-primary" onClick={handleLogin}>Iniciar Sesion</Button>
+                <Button type="button" className="btn btn-primary" onClick={handleLogin} disabled={fetching}>Iniciar Sesion</Button>
             </Form>
             <Form.Text muted>
                 ¿Aún no tienes una cuenta? <Link to={"/register"}>Registrate</Link>
