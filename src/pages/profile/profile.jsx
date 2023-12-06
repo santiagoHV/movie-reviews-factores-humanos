@@ -1,4 +1,4 @@
-import { Container, Row, Tabs, Tab, Form, Button } from "react-bootstrap";
+import { Container, Row, Tabs, Tab, Form, Button, Badge } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import ReviewBox from "../../components/ReviewBox/ReviewBox";
 import EditProfile from "../../components/EditProfile/EditProfile";
@@ -15,7 +15,7 @@ import { showAlert } from '../../reducers/notificationSlice'
 const Profile = () => {
   const dispatch = useDispatch()
   const { userId } = useParams()
-  const { user, isAuthenticated } = useSelector(state => state.auth)
+  const { user, isAuthenticated, isAdmin } = useSelector(state => state.auth)
   const [profileData, setProfileData] = useState()
   const [reviewsData, setReviewsData] = useState()
   const [moviesData, setMoviesData] = useState()
@@ -127,7 +127,6 @@ const Profile = () => {
 
   //Update preferences
   const updatePreferences = async () => {
-    console.log("enviando")
     const response = await fetch(`${backend_url}/api/users/preferences`, {
       method: 'POST',
       headers: {
@@ -142,6 +141,43 @@ const Profile = () => {
     else {
       dispatch(showAlert({ style: 'danger', message: 'Error al actualizar preferencias' }))
     }
+  }
+
+  //Change user status
+  const toggleUserStatus = async () => {
+    const newStatus = !profileData.isBanned
+    const response = await fetch(`${backend_url}/api/users/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "isBanned": newStatus
+      })
+    })
+    if (response.ok) {
+      dispatch(showAlert({ style: 'success', message: 'Estado actualizado' }))
+    } else {
+      dispatch(showAlert({ style: 'danger', message: 'Error al actualizar estado' }))
+    }
+    window.location.reload()
+  }
+
+  //Promote user to admin
+  const promoteUser = async () => {
+    const response = await fetch(`${backend_url}/api/users/create-admin/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': user.token
+      },
+    })
+    if (response.ok) {
+      dispatch(showAlert({ style: 'success', message: 'Estado actualizado' }))
+    } else {
+      dispatch(showAlert({ style: 'danger', message: 'Error al actualizar estado' }))
+    }
+    window.location.reload()
   }
 
   return (
@@ -160,6 +196,7 @@ const Profile = () => {
               </div>
               <div className="info-perfil">
                 <h1>{profileData.name} {profileData.lastname}</h1>
+                {isAdmin && profileData.role == 'admin' ? <Badge>Admin</Badge> : null}
                 <div className="info-personal">
                   <div className="double-items">
                     <p>
@@ -176,6 +213,19 @@ const Profile = () => {
                       &nbsp; Fecha de nacimiento: {profileData.birthdate}</p>
                   </div>
                 </div>
+                {isAdmin && userId != user.id ? (
+                  <>
+                    {profileData.isBanned ?
+                      <Button variant="danger" onClick={toggleUserStatus}>Activar</Button> : null
+                    }
+                    {profileData.role != 'admin' && !profileData.isBanned ? (
+                      <>
+                        {/*<Button variant="danger" onClick={toggleUserStatus}>Suspender</Button>*/}
+                        <Button variant="success" onClick={promoteUser}>Promover</Button>
+                      </>
+                    ) : null}
+                  </>
+                ) : null}
               </div>
             </div>
           </Row>
@@ -191,13 +241,14 @@ const Profile = () => {
               />
             </div>
           ) : null}
+
           <Tabs
             defaultActiveKey="misReseñas"
             id="uncontrolled-tab-example"
             className="mb-3"
           >
 
-            <Tab eventKey="misReseñas" title="Mis Reseñas">
+            <Tab eventKey="misReseñas" title={userId == user.id ? 'Mis reseñas' : 'Reseñas'}>
               {reviewsData ? reviewsData.map((r, index) => <ReviewBox
                 name={`${profileData.name} ${profileData.lastname}`}
                 qualification={r.rating}
@@ -226,7 +277,7 @@ const Profile = () => {
                     )
                   )) : <LoadingIcon />}
                 </Form>
-                <Button className="btn-actualizar" variant="primary" onClick={updatePreferences}>Actualizar</Button>{' '}
+                <Button className="btn-actualizar" variant="primary" onClick={updatePreferences}>Actualizar</Button>
               </Tab>
             ) : null}
             {isAuthenticated && user.email === profileData.email ? (
@@ -235,7 +286,7 @@ const Profile = () => {
                   <>
                     <section>
                       <h2>Publicadas</h2>
-                      {moviesData.filter(movie=>movie.status=='approved').map((movie)=><ReviewBox
+                      {moviesData.filter(movie => movie.status == 'approved').map((movie) => <ReviewBox
                         key={movie.id}
                         isMovie={true}
                         name={movie.title}
@@ -247,7 +298,7 @@ const Profile = () => {
                     </section>
                     <section>
                       <h2>Pendientes</h2>
-                      {moviesData.filter(movie=>movie.status=='pending').map((movie)=><ReviewBox
+                      {moviesData.filter(movie => movie.status == 'pending').map((movie) => <ReviewBox
                         key={movie.id}
                         isMovie={true}
                         name={movie.title}
@@ -259,7 +310,7 @@ const Profile = () => {
                     </section>
                     <section>
                       <h2>Rechazadas</h2>
-                      {moviesData.filter(movie=>movie.status=='rejected').map((movie)=><ReviewBox
+                      {moviesData.filter(movie => movie.status == 'rejected').map((movie) => <ReviewBox
                         key={movie.id}
                         isMovie={true}
                         name={movie.title}
