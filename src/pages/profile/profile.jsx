@@ -250,13 +250,13 @@ const Profile = () => {
 
             <Tab eventKey="misReseñas" title={userId == user.id ? 'Mis reseñas' : 'Reseñas'}>
               {reviewsData ? reviewsData.map((r, index) => <ReviewBox
-                name={`${profileData.name} ${profileData.lastname}`}
+                name={`${r.movie.title}`}
                 qualification={r.rating}
                 review={r.comment}
                 image={`https://ui-avatars.com/api/?name=${profileData.name}+${profileData.lastname}&background=random&size=256`}
                 key={index}
                 isMovie={true}
-                id={r.id}
+                id={r.movie.id}
               />) : <LoadingIcon />}
             </Tab>
 
