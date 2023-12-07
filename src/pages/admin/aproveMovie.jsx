@@ -40,7 +40,7 @@ const AproveMovie = () => {
                 }
             })
         } else {
-            await fetch(`${backend_url}/api/movies/admin/reject/${id}`, {
+            await fetch(`${backend_url}/api/movies/admin/unpublish/${id}`, {
                 method: 'PUT',
                 headers: {
                     'x-access-token': token
